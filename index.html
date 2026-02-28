@@ -16,8 +16,6 @@
       --muted:     #7b82a8;
       --proj-a: #a855f7;
       --proj-b: #ec4899;
-      --qdr-a:  #06b6d4;
-      --qdr-b:  #84cc16;
       --radius: 12px;
       --card-radius: 10px;
       --header-bg:  rgba(16,18,30,.85);
@@ -54,13 +52,12 @@
     header::after {
       content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
       background: linear-gradient(90deg,
-        transparent 0%, var(--proj-a) 25%, var(--proj-b) 45%,
-        var(--qdr-a) 55%, var(--qdr-b) 75%, transparent 100%);
+        transparent 0%, var(--proj-a) 30%, var(--proj-b) 70%, transparent 100%);
       opacity: .7;
     }
     header h1 {
       font-size: 1.35rem; font-weight: 800; letter-spacing: 1px;
-      background: linear-gradient(90deg, var(--proj-a), var(--proj-b), var(--qdr-a), var(--qdr-b));
+      background: linear-gradient(90deg, var(--proj-a), var(--proj-b));
       background-size: 300% 100%;
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
       animation: shimmer 4s linear infinite;
@@ -70,29 +67,24 @@
     .header-stats { display: flex; gap: 10px; }
     .hstat { font-size: .72rem; font-weight: 600; padding: 3px 10px; border-radius: 20px; letter-spacing: .4px; }
     .hstat-proj { background: rgba(168,85,247,.18); color: var(--proj-a); border: 1px solid rgba(168,85,247,.35); }
-    .hstat-qdr  { background: rgba(6,182,212,.15);  color: var(--qdr-a);  border: 1px solid rgba(6,182,212,.3);   }
     .hstat-task { background: rgba(132,204,22,.1);  color: #bef264;       border: 1px solid rgba(132,204,22,.28); }
     header .date { font-size: .75rem; color: var(--muted); }
     #sync-status { font-size: .65rem; color: var(--muted); font-weight: 600; letter-spacing: .3px; }
 
     /* ── Board ── */
-    .board { display: grid; grid-template-columns: 1fr 1fr; flex: 1; overflow: hidden; position: relative; z-index: 1; min-height: 0; }
+    .board { display: grid; grid-template-columns: 1fr; flex: 1; overflow: hidden; position: relative; z-index: 1; min-height: 0; }
     .panel { display: flex; flex-direction: column; overflow: hidden; min-height: 0; }
-    .panel--proj { border-right: 1px solid var(--border); }
 
     .panel-stripe { height: 3px; flex-shrink: 0; }
     .panel--proj .panel-stripe { background: linear-gradient(90deg, var(--proj-a), var(--proj-b)); box-shadow: 0 0 16px rgba(168,85,247,.5); }
-    .panel--qdr  .panel-stripe { background: linear-gradient(90deg, var(--qdr-a),  var(--qdr-b));  box-shadow: 0 0 16px rgba(6,182,212,.45); }
 
     .panel-header { display: flex; align-items: center; justify-content: space-between; padding: 14px 22px 10px; flex-shrink: 0; }
     .panel-title { display: flex; align-items: center; gap: 10px; font-size: .95rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; }
     .panel--proj .panel-title { background: linear-gradient(90deg, var(--proj-a), var(--proj-b)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .panel--qdr  .panel-title { background: linear-gradient(90deg, var(--qdr-a),  var(--qdr-b));  -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     .panel-icon { font-size: 1.1rem; filter: drop-shadow(0 0 6px currentColor); }
 
     .count-badge { font-size: .7rem; font-weight: 700; padding: 2px 9px; border-radius: 20px; letter-spacing: 0; text-transform: none; }
     .panel--proj .count-badge { background: rgba(168,85,247,.2); color: var(--proj-a); border: 1px solid rgba(168,85,247,.4); }
-    .panel--qdr  .count-badge { background: rgba(6,182,212,.15); color: var(--qdr-a);  border: 1px solid rgba(6,182,212,.35); }
 
     .btn-add {
       font-size: .78rem; font-weight: 700; padding: 7px 16px;
@@ -102,14 +94,12 @@
     .btn-add:hover { transform: translateY(-1px); filter: brightness(1.15); }
     .btn-add:active { transform: translateY(0); }
     .panel--proj .btn-add { background: linear-gradient(135deg, var(--proj-a), var(--proj-b)); box-shadow: 0 4px 14px rgba(168,85,247,.45); }
-    .panel--qdr  .btn-add { background: linear-gradient(135deg, var(--qdr-a),  var(--qdr-b));  box-shadow: 0 4px 14px rgba(6,182,212,.4);  color: #031214; }
 
     /* ── Card list ── */
     .card-list { flex: 1; overflow-y: auto; padding: 2px 18px 18px; display: flex; flex-direction: column; gap: 10px; }
     .card-list::-webkit-scrollbar { width: 4px; }
     .card-list::-webkit-scrollbar-track { background: transparent; }
     .panel--proj .card-list::-webkit-scrollbar-thumb { background: linear-gradient(var(--proj-a), var(--proj-b)); border-radius: 4px; }
-    .panel--qdr  .card-list::-webkit-scrollbar-thumb { background: linear-gradient(var(--qdr-a),  var(--qdr-b));  border-radius: 4px; }
 
     .empty-state { text-align: center; color: var(--muted); font-size: .83rem; padding: 44px 24px; border: 1.5px dashed var(--border); border-radius: var(--card-radius); line-height: 1.7; }
 
@@ -127,27 +117,14 @@
 
     .card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; border-radius: 10px 0 0 10px; }
     .panel--proj .card::before { background: linear-gradient(180deg, var(--proj-a), var(--proj-b)); }
-    .panel--qdr  .card::before { background: linear-gradient(180deg, var(--qdr-a),  var(--qdr-b));  }
 
     .card:hover { transform: translateX(3px); }
-    @keyframes cardPulse { 0%,100%{box-shadow:none} 30%,70%{box-shadow:-4px 0 0 3px var(--qdr-a),0 0 28px color-mix(in srgb,var(--qdr-a) 45%,transparent)} }
+    @keyframes cardPulse { 0%,100%{box-shadow:none} 30%,70%{box-shadow:-4px 0 0 3px var(--proj-a),0 0 28px color-mix(in srgb,var(--proj-a) 45%,transparent)} }
     .card--found { animation: cardPulse 1.1s ease 2; }
     .panel--proj .card:hover { box-shadow: -4px 0 20px rgba(168,85,247,.25), 0 4px 20px rgba(168,85,247,.1); border-color: rgba(168,85,247,.4); }
-    .panel--qdr  .card:hover { box-shadow: -4px 0 20px rgba(6,182,212,.2),   0 4px 20px rgba(6,182,212,.08);  border-color: rgba(6,182,212,.35); }
 
     .panel--proj .card { background: linear-gradient(135deg, rgba(168,85,247,.05) 0%, var(--surface) 40%); }
-    .panel--qdr  .card { background: linear-gradient(135deg, rgba(6,182,212,.04) 0%, var(--surface) 40%); }
 
-    /* Priority QDR card */
-    .panel--qdr .card.card--priority {
-      border-color: rgba(251,191,36,.55);
-      background: linear-gradient(135deg, rgba(251,191,36,.08) 0%, var(--surface) 45%);
-    }
-    .panel--qdr .card.card--priority::before { background: linear-gradient(180deg, #f59e0b, #fbbf24); }
-    .panel--qdr .card.card--priority:hover {
-      box-shadow: -4px 0 22px rgba(251,191,36,.32), 0 4px 20px rgba(251,191,36,.16);
-      border-color: rgba(251,191,36,.75);
-    }
 
     /* Completed card */
     .card--done { opacity: .5; border-color: var(--border) !important; background: var(--surface) !important; transition: opacity .2s; }
@@ -202,21 +179,6 @@
     .tdm-card-label { font-size: .83rem; font-weight: 700; color: var(--fg); }
     .tdm-card-desc  { font-size: .72rem; color: var(--muted); line-height: 1.4; }
 
-    /* Priority button */
-    .btn-priority {
-      font-size: .62rem; font-weight: 700; padding: 3px 8px;
-      border-radius: 20px; border: 1px solid var(--border);
-      background: transparent; color: var(--muted);
-      cursor: pointer; letter-spacing: .2px; white-space: nowrap;
-      transition: color .13s, border-color .13s, background .13s, box-shadow .13s;
-    }
-    .btn-priority:hover { color: #fbbf24; border-color: rgba(251,191,36,.5); }
-    .btn-priority.is-priority {
-      background: linear-gradient(135deg, #d97706, #fbbf24);
-      color: #1a0e00; border-color: transparent;
-      box-shadow: 0 2px 8px rgba(251,191,36,.4);
-    }
-    .btn-priority.is-priority:hover { filter: brightness(1.1); }
 
     .card-title { font-size: .9rem; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .card-meta  { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; }
@@ -240,7 +202,7 @@
     .card-date { font-size: .7rem; color: var(--muted); background: var(--surface2); padding: 2px 7px; border-radius: 6px; white-space: nowrap; flex-shrink: 0; }
     .card-desc { font-size: .77rem; color: #9ba4c0; line-height: 1.5; white-space: pre-wrap; word-break: break-word; }
 
-    /* QDR two-column layout */
+    /* Card two-column layout */
     .card-split { display: flex; gap: 0; align-items: stretch; }
     .card-left  { display: flex; flex-direction: column; gap: 5px; flex: 1; min-width: 0; padding-right: 12px; }
     .card-right { flex: 1; min-width: 0; border-left: 1px solid var(--border); padding-left: 12px; display: flex; align-items: center; }
@@ -249,7 +211,6 @@
     .card-link { font-size: .7rem; display: flex; align-items: center; gap: 4px; }
     .card-link a { text-decoration: none; word-break: break-all; font-weight: 600; }
     .panel--proj .card-link a { color: var(--proj-a); }
-    .panel--qdr  .card-link a { color: var(--qdr-a);  }
     .card-link a:hover { text-decoration: underline; }
 
     .btn-icon { background: none; border: none; cursor: pointer; color: var(--muted); padding: 4px 5px; border-radius: 5px; font-size: .78rem; line-height: 1; transition: color .13s, background .13s; }
@@ -282,7 +243,6 @@
     .todo-label { font-size: .65rem; font-weight: 800; text-transform: uppercase; letter-spacing: .8px; color: var(--muted); }
     .todo-summary { font-size: .65rem; font-weight: 700; padding: 1px 7px; border-radius: 10px; }
     .panel--proj .todo-summary { background: rgba(168,85,247,.12); color: var(--proj-a); border: 1px solid rgba(168,85,247,.25); }
-    .panel--qdr  .todo-summary { background: rgba(6,182,212,.12);  color: var(--qdr-a);  border: 1px solid rgba(6,182,212,.25);  }
     .todo-chevron { margin-left: auto; font-size: .6rem; color: var(--muted); transition: transform .18s; }
     .todo-section.open .todo-chevron { transform: rotate(180deg); }
 
@@ -297,7 +257,6 @@
     .todo-highlight-btn.on { color: #fbbf24; filter: drop-shadow(0 0 4px rgba(251,191,36,.7)); }
     .todo-cb { width: 14px; height: 14px; cursor: pointer; flex-shrink: 0; }
     .panel--proj .todo-cb { accent-color: var(--proj-a); }
-    .panel--qdr  .todo-cb { accent-color: var(--qdr-a);  }
     .todo-text { flex: 1; font-size: .78rem; min-width: 0; word-break: break-word; }
     .todo-due { font-size: .63rem; font-weight: 600; padding: 2px 6px; border-radius: 5px; white-space: nowrap; flex-shrink: 0; }
     .todo-due.future  { background: var(--surface2); color: var(--muted); }
@@ -324,15 +283,12 @@
     .panel--proj .todo-edit-text:focus,
     .panel--proj .todo-edit-date:focus,
     .panel--proj .todo-edit-link:focus { border-color: var(--proj-a); box-shadow: 0 0 0 2px rgba(168,85,247,.12); }
-    .panel--qdr  .todo-edit-text:focus,
-    .panel--qdr  .todo-edit-date:focus  { border-color: var(--qdr-a);  box-shadow: 0 0 0 2px rgba(6,182,212,.12);  }
     .todo-edit-cal {
       width: 24px; flex-shrink: 0; border-radius: 5px; border: 1px solid var(--border);
       background: var(--bg); color: var(--muted); font-size: .75rem; cursor: pointer;
       display: flex; align-items: center; justify-content: center; transition: color .13s, border-color .13s;
     }
     .panel--proj .todo-edit-cal:hover { border-color: var(--proj-a); color: var(--proj-a); }
-    .panel--qdr  .todo-edit-cal:hover { border-color: var(--qdr-a);  color: var(--qdr-a);  }
     .todo-edit-actions { display: flex; gap: 4px; margin-left: auto; }
     .todo-save-btn, .todo-cancel-btn {
       font-size: .7rem; font-weight: 700; padding: 3px 9px;
@@ -340,7 +296,6 @@
     }
     .todo-save-btn:hover, .todo-cancel-btn:hover { filter: brightness(1.15); }
     .panel--proj .todo-save-btn { background: linear-gradient(135deg, var(--proj-a), var(--proj-b)); color: #fff; }
-    .panel--qdr  .todo-save-btn { background: linear-gradient(135deg, var(--qdr-a),  var(--qdr-b));  color: #031214; }
     .todo-cancel-btn { background: var(--surface2); color: var(--muted); border: 1px solid var(--border); }
 
     /* Add-todo row */
@@ -351,7 +306,6 @@
       padding: 5px 8px; font-family: inherit; outline: none; transition: border-color .13s;
     }
     .panel--proj .todo-add-text:focus { border-color: var(--proj-a); box-shadow: 0 0 0 2px rgba(168,85,247,.12); }
-    .panel--qdr  .todo-add-text:focus { border-color: var(--qdr-a);  box-shadow: 0 0 0 2px rgba(6,182,212,.12);  }
     .todo-date-wrap { display: flex; gap: 4px; }
     .todo-add-date {
       width: 94px; background: var(--bg); border: 1px solid var(--border);
@@ -361,7 +315,6 @@
     }
     .todo-add-date::-webkit-calendar-picker-indicator { display: none; }
     .panel--proj .todo-add-date:focus { border-color: var(--proj-a); }
-    .panel--qdr  .todo-add-date:focus { border-color: var(--qdr-a);  }
     .todo-add-cal {
       width: 26px; border-radius: 6px; border: 1px solid var(--border);
       background: var(--bg); color: var(--muted); font-size: .8rem;
@@ -369,7 +322,6 @@
       transition: background .13s, border-color .13s, color .13s;
     }
     .panel--proj .todo-add-cal:hover { background: rgba(168,85,247,.15); border-color: var(--proj-a); color: var(--proj-a); }
-    .panel--qdr  .todo-add-cal:hover { background: rgba(6,182,212,.12);  border-color: var(--qdr-a);  color: var(--qdr-a);  }
     .todo-add-btn {
       width: 26px; border-radius: 6px; border: none;
       font-size: 1rem; font-weight: 700; cursor: pointer;
@@ -378,7 +330,6 @@
     }
     .todo-add-btn:hover { filter: brightness(1.15); }
     .panel--proj .todo-add-btn { background: linear-gradient(135deg, var(--proj-a), var(--proj-b)); color: #fff; }
-    .panel--qdr  .todo-add-btn { background: linear-gradient(135deg, var(--qdr-a),  var(--qdr-b));  color: #031214; }
 
     /* Todo link input row (proj only) */
     .todo-add-link-row { display: flex; gap: 5px; margin-top: 4px; }
@@ -388,7 +339,6 @@
       padding: 5px 8px; font-family: inherit; outline: none; transition: border-color .13s;
     }
     .panel--proj .todo-add-link:focus { border-color: var(--proj-a); box-shadow: 0 0 0 2px rgba(168,85,247,.12); }
-    .panel--qdr  .todo-add-link:focus { border-color: var(--qdr-a);  box-shadow: 0 0 0 2px rgba(6,182,212,.12);  }
 
     /* Link badge on a todo item */
     .todo-item-link {
@@ -398,63 +348,49 @@
     }
     .panel--proj .todo-item-link { background: rgba(168,85,247,.12); color: var(--proj-a); border: 1px solid rgba(168,85,247,.25); }
     .panel--proj .todo-item-link:hover { background: rgba(168,85,247,.25); text-decoration: underline; }
-    .panel--qdr  .todo-item-link { background: rgba(6,182,212,.12);  color: var(--qdr-a);  border: 1px solid rgba(6,182,212,.25);  }
-    .panel--qdr  .todo-item-link:hover { background: rgba(6,182,212,.25);  text-decoration: underline; }
 
     /* ── Milestones ── */
     .milestone-section { margin-top: 10px; border-top: 1px solid var(--border); padding-top: 7px; }
     .milestone-header { display: flex; align-items: center; gap: 7px; cursor: pointer; user-select: none; padding: 2px 0; }
     .milestone-label { font-size: .65rem; font-weight: 800; text-transform: uppercase; letter-spacing: .8px; color: var(--muted); }
-    .milestone-summary { font-size: .65rem; font-weight: 700; padding: 1px 7px; border-radius: 10px; background: rgba(6,182,212,.12); color: var(--qdr-a); border: 1px solid rgba(6,182,212,.25); }
+    .milestone-summary { font-size: .65rem; font-weight: 700; padding: 1px 7px; border-radius: 10px; background: rgba(168,85,247,.12); color: var(--proj-a); border: 1px solid rgba(168,85,247,.25); }
     .milestone-chevron { margin-left: auto; font-size: .6rem; color: var(--muted); transition: transform .18s; }
     .milestone-section.open .milestone-chevron { transform: rotate(180deg); }
     .milestone-body { display: none; flex-direction: column; gap: 5px; margin-top: 8px; }
     .milestone-section.open .milestone-body { display: flex; }
     .milestone-item { display: flex; align-items: center; gap: 7px; padding: 5px 7px; border-radius: 6px; background: var(--bg); border: 1px solid var(--border); }
     .milestone-item.done .milestone-name { text-decoration: line-through; opacity: .45; }
-    .milestone-cb { width: 14px; height: 14px; cursor: pointer; flex-shrink: 0; accent-color: var(--qdr-a); }
+    .milestone-cb { width: 14px; height: 14px; cursor: pointer; flex-shrink: 0; accent-color: var(--proj-a); }
     .milestone-name { flex: 1; font-size: .78rem; min-width: 0; word-break: break-word; }
     .milestone-date { font-size: .63rem; font-weight: 600; padding: 2px 6px; border-radius: 5px; white-space: nowrap; flex-shrink: 0; background: var(--surface2); color: var(--muted); }
     .milestone-del { background: none; border: none; cursor: pointer; color: var(--muted); font-size: .7rem; padding: 2px 3px; border-radius: 3px; line-height: 1; flex-shrink: 0; transition: color .13s; }
     .milestone-del:hover { color: #f87171; }
     .milestone-add-row { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; margin-top: 2px; }
     .milestone-add-name { flex: 1; min-width: 80px; background: var(--bg); border: 1px solid var(--border); border-radius: 6px; color: var(--fg); padding: 5px 8px; font-size: .78rem; font-family: inherit; }
-    .milestone-add-name:focus { outline: none; border-color: var(--qdr-a); box-shadow: 0 0 0 2px rgba(6,182,212,.12); }
+    .milestone-add-name:focus { outline: none; border-color: var(--proj-a); box-shadow: 0 0 0 2px rgba(168,85,247,.12); }
     .milestone-add-date { background: var(--bg); border: 1px solid var(--border); border-radius: 6px; color: var(--text); padding: 4px 6px; font-size: .78rem; font-family: inherit; flex-shrink: 0; -webkit-appearance: none; appearance: none; }
     .milestone-add-date::-webkit-calendar-picker-indicator { display: none; }
-    .milestone-add-date:focus { outline: none; border-color: var(--qdr-a); }
+    .milestone-add-date:focus { outline: none; border-color: var(--proj-a); }
     .ms-date-wrap { display: flex; gap: 4px; align-items: center; }
     .ms-btn-cal { flex-shrink: 0; width: 26px; height: 26px; border-radius: 5px; border: 1px solid var(--border); background: var(--bg); color: var(--muted); font-size: .8rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background .13s, color .13s, border-color .13s; padding: 0; line-height: 1; }
-    .ms-btn-cal:hover { background: rgba(6,182,212,.12); border-color: var(--qdr-a); color: var(--qdr-a); }
+    .ms-btn-cal:hover { background: rgba(168,85,247,.12); border-color: var(--proj-a); color: var(--proj-a); }
     .milestone-add-btn { border: none; border-radius: 6px; font-size: .75rem; font-weight: 700; padding: 5px 12px; cursor: pointer; flex-shrink: 0; transition: filter .13s; }
     .milestone-add-btn:hover { filter: brightness(1.15); }
     .panel--proj .milestone-add-btn { background: linear-gradient(135deg, var(--proj-a), var(--proj-b)); color: #fff; }
-    .panel--qdr  .milestone-add-btn { background: linear-gradient(135deg, var(--qdr-a),  var(--qdr-b));  color: #031214; }
-    .next-ms-badge { display: inline-flex; align-items: center; gap: 5px; font-size: .67rem; font-weight: 700; padding: 2px 8px; border-radius: 10px; background: rgba(6,182,212,.1); color: var(--qdr-a); border: 1px solid rgba(6,182,212,.2); white-space: nowrap; max-width: 100%; overflow: hidden; text-overflow: ellipsis; }
+    .next-ms-badge { display: inline-flex; align-items: center; gap: 5px; font-size: .67rem; font-weight: 700; padding: 2px 8px; border-radius: 10px; background: rgba(168,85,247,.1); color: var(--proj-a); border: 1px solid rgba(168,85,247,.2); white-space: nowrap; max-width: 100%; overflow: hidden; text-overflow: ellipsis; }
     .next-ms-badge.overdue { background: rgba(239,68,68,.12); color: #fca5a5; border-color: rgba(239,68,68,.28); }
     .next-ms-badge.today   { background: rgba(250,204,21,.12); color: #fde68a; border-color: rgba(250,204,21,.3); }
 
-    /* ── Aged QDR card ── */
-    .panel--qdr .card.card--aged {
-      border-color: color-mix(in srgb, var(--warn-a) 40%, transparent);
-      background: linear-gradient(135deg, color-mix(in srgb, var(--warn-a) 7%, var(--surface)) 0%, var(--surface) 50%);
-    }
-    .panel--qdr .card.card--aged::before { background: var(--warn-a); opacity: .8; }
-    .panel--qdr .card.card--aged:hover {
-      box-shadow: -4px 0 22px color-mix(in srgb, var(--warn-a) 28%, transparent), 0 4px 20px color-mix(in srgb, var(--warn-a) 12%, transparent);
-      border-color: color-mix(in srgb, var(--warn-a) 65%, transparent);
-    }
-    .age-badge { display: inline-flex; align-items: center; gap: 4px; font-size: .67rem; font-weight: 700; padding: 2px 7px; border-radius: 10px; background: color-mix(in srgb, var(--warn-a) 12%, transparent); color: var(--warn-a); border: 1px solid color-mix(in srgb, var(--warn-a) 28%, transparent); white-space: nowrap; }
 
     /* ── Color Vision Modes ── */
-    body.cv-deuteranopia { --proj-a:#3b82f6; --proj-b:#818cf8; --qdr-a:#f97316; --qdr-b:#fbbf24; --warn-a:#ea580c; --bg-glow-a:rgba(59,130,246,.12); --bg-glow-b:rgba(249,115,22,.10); --bg-glow-c:rgba(129,140,248,.08); }
-    body.cv-tritanopia   { --proj-a:#e11d48; --proj-b:#fb923c; --qdr-a:#0d9488; --qdr-b:#34d399; --warn-a:#7c3aed; --bg-glow-a:rgba(225,29,72,.12);  --bg-glow-b:rgba(13,148,136,.10);  --bg-glow-c:rgba(251,146,60,.08); }
-    body.cv-high-contrast{ --proj-a:#f0abfc; --proj-b:#e879f9; --qdr-a:#67e8f9; --qdr-b:#22d3ee; --warn-a:#fde047; --bg-glow-a:rgba(240,171,252,.16); --bg-glow-b:rgba(103,232,249,.13); --bg-glow-c:rgba(232,121,249,.10); }
+    body.cv-deuteranopia { --proj-a:#3b82f6; --proj-b:#818cf8; --warn-a:#ea580c; --bg-glow-a:rgba(59,130,246,.12); --bg-glow-b:rgba(249,115,22,.10); --bg-glow-c:rgba(129,140,248,.08); }
+    body.cv-tritanopia   { --proj-a:#e11d48; --proj-b:#fb923c; --warn-a:#7c3aed; --bg-glow-a:rgba(225,29,72,.12);  --bg-glow-b:rgba(13,148,136,.10);  --bg-glow-c:rgba(251,146,60,.08); }
+    body.cv-high-contrast{ --proj-a:#f0abfc; --proj-b:#e879f9; --warn-a:#fde047; --bg-glow-a:rgba(240,171,252,.16); --bg-glow-b:rgba(103,232,249,.13); --bg-glow-c:rgba(232,121,249,.10); }
 
     .cv-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:10px; }
     .cv-card { background:var(--surface2); border:1px solid var(--border); border-radius:10px; padding:12px 14px; cursor:pointer; transition:border-color .15s,background .15s; display:flex; flex-direction:column; gap:8px; }
     .cv-card:hover { border-color:var(--muted); background:var(--surface); }
-    .cv-card.selected { border-color:var(--qdr-a); background:rgba(6,182,212,.07); }
+    .cv-card.selected { border-color:var(--proj-a); background:rgba(168,85,247,.07); }
     .cv-swatches { display:flex; gap:6px; align-items:center; }
     .cv-swatch { width:18px; height:18px; border-radius:50%; flex-shrink:0; }
     .cv-name { font-size:.8rem; font-weight:700; color:var(--text); }
@@ -462,10 +398,10 @@
 
     .target-row { display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
     .target-days-input { width:68px; background:var(--bg); border:1px solid var(--border); border-radius:7px; color:var(--text); font-size:.9rem; padding:7px 10px; font-family:inherit; text-align:center; outline:none; transition:border-color .15s; }
-    .target-days-input:focus { border-color:var(--qdr-a); box-shadow:0 0 0 2px rgba(6,182,212,.12); }
+    .target-days-input:focus { border-color:var(--proj-a); box-shadow:0 0 0 2px rgba(168,85,247,.12); }
     .target-days-lbl { font-size:.82rem; color:var(--muted); }
     .modal-milestone-row { display: flex; align-items: center; gap: 8px; padding: 4px 0; }
-    .modal-milestone-row input[type=checkbox] { width: 15px; height: 15px; flex-shrink: 0; accent-color: var(--qdr-a); cursor: pointer; background: unset; border: unset; border-radius: unset; padding: unset; }
+    .modal-milestone-row input[type=checkbox] { width: 15px; height: 15px; flex-shrink: 0; accent-color: var(--proj-a); cursor: pointer; background: unset; border: unset; border-radius: unset; padding: unset; }
     .modal-milestone-row label { display: inline-flex; text-transform: none; letter-spacing: normal; font-size: .85rem; font-weight: 600; color: var(--text); cursor: pointer; }
 
     /* ── Modal ── */
@@ -480,11 +416,9 @@
     }
     .modal::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; border-radius: var(--radius) var(--radius) 0 0; }
     .modal.proj-modal::before { background: linear-gradient(90deg, var(--proj-a), var(--proj-b)); }
-    .modal.qdr-modal::before  { background: linear-gradient(90deg, var(--qdr-a),  var(--qdr-b));  }
 
     .modal h2 { font-size: 1rem; font-weight: 800; letter-spacing: .3px; }
     .modal.proj-modal h2 { background: linear-gradient(90deg, var(--proj-a), var(--proj-b)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .modal.qdr-modal  h2 { background: linear-gradient(90deg, var(--qdr-a),  var(--qdr-b));  -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
     .modal label { display: flex; flex-direction: column; gap: 5px; font-size: .72rem; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: .6px; }
     .modal input, .modal select, .modal textarea {
@@ -493,7 +427,6 @@
       outline: none; transition: border-color .15s, box-shadow .15s;
     }
     .modal.proj-modal input:focus, .modal.proj-modal select:focus, .modal.proj-modal textarea:focus { border-color: var(--proj-a); box-shadow: 0 0 0 3px rgba(168,85,247,.15); }
-    .modal.qdr-modal  input:focus, .modal.qdr-modal  select:focus, .modal.qdr-modal  textarea:focus { border-color: var(--qdr-a);  box-shadow: 0 0 0 3px rgba(6,182,212,.15);  }
     .modal select option { background: var(--surface); }
     .modal textarea { resize: vertical; min-height: 72px; }
 
@@ -502,7 +435,6 @@
     .date-input-wrap input[type="date"]::-webkit-calendar-picker-indicator { display: none; }
     .btn-cal { flex-shrink: 0; width: 38px; border-radius: 7px; border: 1px solid var(--border); background: var(--bg); color: var(--muted); font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background .13s, color .13s, border-color .13s; }
     .modal.proj-modal .btn-cal:hover { background: rgba(168,85,247,.15); border-color: var(--proj-a); color: var(--proj-a); }
-    .modal.qdr-modal  .btn-cal:hover { background: rgba(6,182,212,.12);  border-color: var(--qdr-a);  color: var(--qdr-a);  }
 
     .modal-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
     .modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 4px; }
@@ -511,7 +443,6 @@
     .btn:active { transform: translateY(0); }
     .btn-cancel { background: var(--surface2); color: var(--muted); border: 1px solid var(--border); }
     .modal.proj-modal .btn-save { background: linear-gradient(135deg, var(--proj-a), var(--proj-b)); color: #fff; box-shadow: 0 4px 14px rgba(168,85,247,.4); }
-    .modal.qdr-modal  .btn-save { background: linear-gradient(135deg, var(--qdr-a),  var(--qdr-b));  color: #031214; box-shadow: 0 4px 14px rgba(6,182,212,.4); }
     .btn-delete { background: linear-gradient(135deg, #dc2626, #b91c1c); color: #fff; box-shadow: 0 4px 14px rgba(220,38,38,.4); }
 
     /* ── Confirm dialog ── */
@@ -545,7 +476,7 @@
     }
     .tab-btn:hover { color: var(--text); border-color: var(--muted); background: var(--surface2); }
     .tab-btn.active {
-      background: linear-gradient(135deg, var(--proj-a), var(--qdr-a));
+      background: linear-gradient(135deg, var(--proj-a), var(--proj-b));
       border-color: transparent; color: #fff;
       box-shadow: 0 3px 14px rgba(168,85,247,.45), 0 1px 4px rgba(6,182,212,.3);
     }
@@ -584,7 +515,7 @@
     .cal-month-section { display: flex; flex-direction: column; gap: 8px; }
     .cal-section-label {
       font-size: 1.05rem; font-weight: 800; letter-spacing: .4px;
-      background: linear-gradient(90deg, var(--proj-a), var(--qdr-a));
+      background: linear-gradient(90deg, var(--proj-a), var(--proj-b));
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
       padding: 10px 0 2px;
       position: sticky; top: 0; z-index: 4;
@@ -667,7 +598,6 @@
     .cal-detail-item:hover .cal-detail-nav { opacity: 1; }
     .cal-detail-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
     .cal-detail-dot--proj { background: var(--proj-a); box-shadow: 0 0 5px var(--proj-a); }
-    .cal-detail-dot--qdr  { background: var(--qdr-a);  box-shadow: 0 0 5px var(--qdr-a);  }
     .cal-detail-body { display: flex; flex-direction: column; gap: 2px; flex: 1; min-width: 0; }
     .cal-detail-parent { font-size: .68rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .4px; }
     .cal-detail-todo { font-size: .85rem; font-weight: 600; color: var(--text); word-break: break-word; }
@@ -690,7 +620,6 @@
       width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
     }
     .cal-dot--proj { background: var(--proj-a); box-shadow: 0 0 5px var(--proj-a); }
-    .cal-dot--qdr  { background: var(--qdr-a);  box-shadow: 0 0 5px var(--qdr-a);  }
 
     /* Shared fixed tooltip */
     #cal-tooltip {
@@ -715,7 +644,6 @@
       width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; margin-top: 4px;
     }
     .cal-tip-dot--proj { background: var(--proj-a); }
-    .cal-tip-dot--qdr  { background: var(--qdr-a);  }
     .cal-tip-body { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
     .cal-tip-parent { font-size: .68rem; font-weight: 700; color: var(--muted); }
     .cal-tip-todo   { font-size: .8rem;  font-weight: 600; color: var(--text); word-break: break-word; }
@@ -735,7 +663,7 @@
     }
     .colors-heading {
       font-size: 1rem; font-weight: 800; letter-spacing: .5px;
-      background: linear-gradient(90deg, var(--proj-a), var(--qdr-a));
+      background: linear-gradient(90deg, var(--proj-a), var(--proj-b));
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
     .colors-sub { font-size: .8rem; color: var(--muted); margin-top: -16px; }
@@ -790,7 +718,7 @@
     }
     .pname-pair { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
     .pname-a { font-size: .85rem; font-weight: 700; color: var(--proj-a); }
-    .pname-b { font-size: .85rem; font-weight: 700; color: var(--qdr-a); }
+    .pname-b { font-size: .85rem; font-weight: 700; color: var(--proj-b); }
     .pname-sep { color: var(--muted); font-size: .8rem; }
     .pname-check { color: var(--proj-a); font-size: .9rem; flex-shrink: 0; }
     .pname-card.custom-card { cursor: default; flex-direction: column; align-items: stretch; gap: 10px; grid-column: 1 / -1; margin-top: 8px; max-width: 424px; }
@@ -831,7 +759,7 @@
 
     .data-heading {
       font-size: 1rem; font-weight: 800; letter-spacing: .5px;
-      background: linear-gradient(90deg, var(--proj-a), var(--qdr-a));
+      background: linear-gradient(90deg, var(--proj-a), var(--proj-b));
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
     }
     .data-warning {
@@ -864,7 +792,7 @@
     .btn-data:hover { transform: translateY(-1px); filter: brightness(1.1); }
     .btn-data:active { transform: translateY(0); }
     .btn-data-export { background: linear-gradient(135deg, var(--proj-a), var(--proj-b)); color: #fff; box-shadow: 0 4px 14px rgba(168,85,247,.35); }
-    .btn-data-import { background: linear-gradient(135deg, var(--qdr-a), var(--qdr-b)); color: #031214; box-shadow: 0 4px 14px rgba(6,182,212,.35); }
+    .btn-data-import { background: linear-gradient(135deg, var(--proj-a), var(--proj-b)); color: #031214; box-shadow: 0 4px 14px rgba(6,182,212,.35); }
     .data-import-label {
       font-size: .78rem; font-weight: 700; padding: 9px 22px;
       border-radius: 7px; border: 1px solid var(--border);
@@ -872,7 +800,7 @@
       cursor: pointer; transition: border-color .13s, color .13s;
       white-space: nowrap;
     }
-    .data-import-label:hover { border-color: var(--qdr-a); color: var(--text); }
+    .data-import-label:hover { border-color: var(--proj-a); color: var(--text); }
     #import-file { display: none; }
     .data-feedback {
       font-size: .78rem; font-weight: 700; padding: 4px 0;
@@ -887,7 +815,7 @@
       color: var(--fg); padding: 7px 12px; font-size: .85rem; font-family: inherit;
       flex: 1; min-width: 140px;
     }
-    .colleague-name-input:focus { outline: none; border-color: var(--qdr-a); }
+    .colleague-name-input:focus { outline: none; border-color: var(--proj-a); }
     .data-stats {
       display: flex; gap: 10px; flex-wrap: wrap;
     }
@@ -910,13 +838,11 @@
       background-repeat: no-repeat; background-position: 11px center;
     }
     .panel--proj .search-input:focus { border-color: var(--proj-a); box-shadow: 0 0 0 3px rgba(168,85,247,.12); }
-    .panel--qdr  .search-input:focus { border-color: var(--qdr-a);  box-shadow: 0 0 0 3px rgba(6,182,212,.12);  }
     .search-empty { text-align: center; color: var(--muted); font-size: .8rem; padding: 32px 16px; }
 
     /* ── Todo progress bar ── */
     .todo-progress { height: 3px; border-radius: 2px; background: var(--surface2); margin: 8px 0 2px; overflow: hidden; }
     .panel--proj .todo-progress-bar { height: 100%; border-radius: 2px; background: linear-gradient(90deg, var(--proj-a), var(--proj-b)); transition: width .3s; }
-    .panel--qdr  .todo-progress-bar { height: 100%; border-radius: 2px; background: linear-gradient(90deg, var(--qdr-a),  var(--qdr-b));  transition: width .3s; }
 
     /* ── Undo toast ── */
     .undo-toast {
@@ -932,13 +858,13 @@
     .undo-toast-msg { font-size: .82rem; color: var(--text); }
     .undo-toast-bar {
       position: absolute; bottom: 0; left: 0; height: 3px; border-radius: 0 0 30px 30px;
-      background: linear-gradient(90deg, var(--proj-a), var(--qdr-a));
+      background: linear-gradient(90deg, var(--proj-a), var(--proj-b));
       transition: width linear;
     }
     .btn-undo {
       font-size: .78rem; font-weight: 800; padding: 4px 14px;
       border-radius: 20px; border: none; cursor: pointer;
-      background: linear-gradient(135deg, var(--proj-a), var(--qdr-a));
+      background: linear-gradient(135deg, var(--proj-a), var(--proj-b));
       color: #fff; letter-spacing: .2px; transition: filter .12s;
     }
     .btn-undo:hover { filter: brightness(1.15); }
@@ -976,14 +902,14 @@
     }
     .fortune-msg-card::before {
       content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-      background: linear-gradient(90deg, var(--proj-a), var(--proj-b), var(--qdr-a), var(--qdr-b));
+      background: linear-gradient(90deg, var(--proj-a), var(--proj-b));
     }
     .fortune-msg-text {
       font-size: .92rem; line-height: 1.75; color: var(--text);
       font-style: italic; font-weight: 500;
     }
     .fortune-open-quote { font-size: 2rem; color: var(--proj-a); line-height: 0; vertical-align: -0.45em; margin-right: 3px; font-style: normal; }
-    .fortune-close-quote { font-size: 2rem; color: var(--qdr-a); line-height: 0; vertical-align: -0.45em; margin-left: 3px; font-style: normal; }
+    .fortune-close-quote { font-size: 2rem; color: var(--proj-b); line-height: 0; vertical-align: -0.45em; margin-left: 3px; font-style: normal; }
     .fortune-tomorrow { font-size: .7rem; color: var(--muted); margin-top: 10px; text-align: center; }
 
     /* ── About / Credits ── */
@@ -993,7 +919,7 @@
     }
     .about-card-top {
       height: 4px;
-      background: linear-gradient(90deg, var(--proj-a), var(--proj-b), var(--qdr-a), var(--qdr-b));
+      background: linear-gradient(90deg, var(--proj-a), var(--proj-b));
     }
     .about-card-body { padding: 22px 24px; display: flex; flex-direction: column; gap: 18px; }
     .about-sig {
@@ -1063,7 +989,7 @@
       box-shadow: 0 8px 32px rgba(249,115,22,.4), 0 2px 8px rgba(239,68,68,.3);
     }
     .ach-stat-total {
-      background: linear-gradient(135deg, var(--proj-a), var(--qdr-a));
+      background: linear-gradient(135deg, var(--proj-a), var(--proj-b));
       box-shadow: 0 8px 32px rgba(168,85,247,.35), 0 2px 8px rgba(6,182,212,.3);
     }
     .ach-stat-icon  { font-size: 2rem; margin-bottom: 8px; }
@@ -1095,20 +1021,17 @@
       content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
       background: linear-gradient(180deg, var(--proj-a), var(--proj-b));
     }
-    .ach-item--qdr::before { background: linear-gradient(180deg, var(--qdr-a), var(--qdr-b)); }
     .ach-item-check {
       width: 24px; height: 24px; border-radius: 50%; flex-shrink: 0;
       background: linear-gradient(135deg, var(--proj-a), var(--proj-b));
       display: flex; align-items: center; justify-content: center;
       color: #fff; font-size: .8rem; font-weight: 700;
     }
-    .ach-item--qdr .ach-item-check { background: linear-gradient(135deg, var(--qdr-a), var(--qdr-b)); }
     .ach-item-body  { flex: 1; min-width: 0; }
     .ach-item-name  { font-size: .9rem; font-weight: 700; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .ach-item-meta  { display: flex; align-items: center; gap: 8px; margin-top: 3px; }
     .ach-panel-badge { font-size: .68rem; font-weight: 700; padding: 1px 7px; border-radius: 8px; color: #fff; }
     .ach-panel--proj { background: var(--proj-a); }
-    .ach-panel--qdr  { background: var(--qdr-a); }
     .ach-todo-stat   { font-size: .72rem; color: var(--muted); }
     .ach-item-time   { font-size: .75rem; color: var(--muted); flex-shrink: 0; }
 
@@ -1134,10 +1057,8 @@
       content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px;
       background: linear-gradient(180deg, var(--proj-a), var(--proj-b));
     }
-    .ot-group-header--qdr::before { background: linear-gradient(180deg, var(--qdr-a), var(--qdr-b)); }
     .ot-panel-badge { font-size: .68rem; font-weight: 700; padding: 2px 8px; border-radius: 8px; color: #fff; flex-shrink: 0; }
     .ot-panel--proj { background: var(--proj-a); }
-    .ot-panel--qdr  { background: var(--qdr-a); }
     .ot-item-name   { flex: 1; font-size: .88rem; font-weight: 700; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .ot-count-badge { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 1px 8px; font-size: .72rem; font-weight: 700; color: var(--muted); flex-shrink: 0; }
     .ot-todos    { display: flex; flex-direction: column; }
@@ -1152,7 +1073,6 @@
     .ot-todo-link:hover { color: var(--proj-a); }
     .ot-goto-btn { background: none; border: 1px solid var(--border); border-radius: 8px; padding: 3px 10px; font-size: .75rem; font-weight: 700; color: var(--muted); cursor: pointer; flex-shrink: 0; transition: all .15s; }
     .ot-goto-btn:hover { border-color: var(--proj-a); color: var(--proj-a); background: rgba(168,85,247,.07); }
-    .ot-group-header--qdr .ot-goto-btn:hover { border-color: var(--qdr-a); color: var(--qdr-a); background: rgba(6,182,212,.07); }
     /* Achievements: discrete todo rows */
     .ach-todos-section { margin-top: 8px; border-radius: 10px; border: 1px solid var(--border); overflow: hidden; background: var(--surface2); opacity: .85; }
     .ach-todos-header  { display: flex; align-items: center; gap: 8px; padding: 6px 12px; border-bottom: 1px solid var(--border); }
@@ -1187,7 +1107,7 @@
     }
     .auth-title {
       font-size: 1.6rem; font-weight: 800; letter-spacing: 1px; margin-bottom: 8px;
-      background: linear-gradient(90deg, var(--proj-a), var(--proj-b), var(--qdr-a), var(--qdr-b));
+      background: linear-gradient(90deg, var(--proj-a), var(--proj-b));
       background-size: 300% 100%;
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
       animation: shimmer 4s linear infinite;
@@ -1237,7 +1157,6 @@
   <div class="header-right">
     <div class="header-stats">
       <span class="hstat hstat-proj">&#9670; <span id="h-proj-count">0</span> <span id="h-proj-label">Projects</span></span>
-      <span class="hstat hstat-qdr">&#9670; <span id="h-qdr-count">0</span> <span id="h-qdr-label">QDRs</span></span>
       <span class="hstat hstat-task">&#10003; <span id="h-task-count">0</span> <span data-i18n="h_tasks">Tasks</span></span>
     </div>
     <span class="date" id="headerDate"></span>
@@ -1267,17 +1186,6 @@
     <div class="card-list" id="proj-list"></div>
   </section>
 
-  <section class="panel panel--qdr">
-    <div class="panel-stripe"></div>
-    <div class="panel-header">
-      <div class="panel-title"><span id="qdr-title-label">&#9889; QDRs</span> <span class="count-badge" id="qdr-count">0</span></div>
-      <button class="btn-add" id="btn-add-qdr" onclick="openModal('qdr')">+ Add QDR</button>
-    </div>
-    <div class="panel-search">
-      <input class="search-input" id="search-qdr" type="search" placeholder="Search QDRs…" oninput="setSearch('qdr',this.value)">
-    </div>
-    <div class="card-list" id="qdr-list"></div>
-  </section>
 </main>
 
 <!-- Calendar view -->
@@ -1338,24 +1246,11 @@
     </div>
   </div>
 
-  <!-- QDR Age Alert -->
-  <div>
-    <div class="settings-section-heading" id="qdr-alert-heading">&#9201; Age Alert</div>
-    <div style="margin-top:16px; display:flex; flex-direction:column; gap:10px;">
-      <div class="colors-sub" id="qdr-alert-sub">Cards older than this many days will be highlighted as aged.</div>
-      <div class="target-row">
-        <input class="target-days-input" id="qdr-target-days" type="number" min="1" max="999"
-          value="14" onchange="saveQdrTarget(this.value)" oninput="saveQdrTarget(this.value)">
-        <span class="target-days-lbl" id="qdr-alert-lbl">days until age alert</span>
-      </div>
-    </div>
-  </div>
-
   <!-- Color Vision -->
   <div>
     <div class="settings-section-heading" data-i18n="h_cv">&#128065; Color Vision</div>
     <div style="margin-top:16px; display:flex; flex-direction:column; gap:8px;">
-      <div class="colors-sub" id="cv-subtitle">Adjust colors for different types of color vision. Affects project and QDR accent colors.</div>
+      <div class="colors-sub" id="cv-subtitle">Adjust colors for different types of color vision. Affects project accent colors.</div>
       <div class="cv-grid" id="cv-grid"></div>
     </div>
   </div>
@@ -1552,18 +1447,8 @@
     <h2 id="modal-title">Add Project</h2>
 
     <label><span data-i18n="modal_name_lbl">Name / Title</span>
-      <input type="text" id="f-name" placeholder="e.g. Alpha Initiative or QDR-042" />
+      <input type="text" id="f-name" placeholder="e.g. Alpha Initiative" />
     </label>
-
-    <!-- QDR-only fields -->
-    <div id="f-qdr-fields">
-      <label><span data-i18n="modal_date_lbl">Entry Date</span>
-        <div class="date-input-wrap">
-          <input type="date" id="f-date" />
-          <button type="button" class="btn-cal" onclick="document.getElementById('f-date').showPicker()" title="Open calendar">&#128197;</button>
-        </div>
-      </label>
-    </div>
 
     <label><span data-i18n="modal_desc_lbl">Description / Notes</span>
       <textarea id="f-desc" placeholder="Short description…"></textarea>
@@ -1710,15 +1595,14 @@
   const editingTodos     = new Set();
   const closedMilestones = new Set();
   let   pinnedHoverTodo  = null;
-  const searchQuery  = { proj: '', qdr: '' };
+  const searchQuery  = { proj: '' };
   const BATCH = 15;
-  const panelShown = { proj: BATCH, qdr: BATCH };
+  const panelShown = { proj: BATCH };
 
   function load() {
     // 1. Always load from localStorage first (instant, works offline)
     try { const r = localStorage.getItem(KEY); if (r) data = JSON.parse(r); } catch {}
     data.proj.forEach(p => { if (!p.todos) p.todos = []; });
-    data.qdr.forEach(q => { if (!q.todos) q.todos = []; });
 
     // 2. If Firebase is ready, listen for real-time updates
     if (firebaseReady && dbRef) {
@@ -1730,7 +1614,6 @@
         data.proj = data.proj || [];
         data.qdr  = data.qdr  || [];
         data.proj.forEach(p => { if (!p.todos) p.todos = []; });
-        data.qdr.forEach(q => { if (!q.todos) q.todos = []; });
         localStorage.setItem(KEY, JSON.stringify(data)); // cache locally
         renderAll();
         renderCalendar();
@@ -1778,7 +1661,7 @@
   function dayCircle(dateStr) {
     if (!dateStr) return '';
     const days = Math.floor((Date.now() - new Date(dateStr + 'T00:00:00').getTime()) / 86400000);
-    const frac = Math.min(days / qdrTargetDays, 1);
+    const frac = Math.min(days / 14, 1);
     const hue = Math.round(120 - frac * 120);
     const color     = `hsl(${hue},85%,22%)`;
     const textColor = `hsl(${hue},90%,72%)`;
@@ -1882,7 +1765,7 @@
     const openItems = raw.filter(i => !i.done);
     count.textContent  = openItems.length;
     hcount.textContent = openItems.length;
-    const openTasks = [...data.proj, ...data.qdr]
+    const openTasks = [...data.proj]
       .filter(i => !i.done)
       .reduce((s, i) => s + (i.todos ?? []).filter(t => !t.done).length, 0);
     document.getElementById('h-task-count').textContent = openTasks;
@@ -1892,15 +1775,7 @@
       return;
     }
 
-    // QDRs: priority items first, then by entry date asc
-    let items = panel !== 'qdr' ? [...raw] : [...raw].sort((a, b) => {
-      const ap = a.priority ? 1 : 0, bp = b.priority ? 1 : 0;
-      if (ap !== bp) return bp - ap;
-      if (a.date && b.date) return a.date < b.date ? -1 : a.date > b.date ? 1 : 0;
-      if (a.date) return -1;
-      if (b.date) return  1;
-      return 0;
-    });
+    let items = [...raw];
 
     // Done items always sink to the bottom
     items = [...items.filter(i => !i.done), ...items.filter(i => i.done)];
@@ -1926,12 +1801,8 @@
       const linkDiv = item.link
         ? `<div class="card-link"><a href="${esc(item.link)}" target="_blank" rel="noopener">&#128279; ${esc(item.link)}</a></div>`
         : '';
-      const priorityBtn = panel === 'qdr' && !item.done
-        ? `<button class="btn-priority${item.priority ? ' is-priority' : ''}" onclick="togglePriority('${item.id}')">${item.priority ? t('btn_back_normal') : t('btn_prioritize')}</button>`
-        : '';
       const completeBtn = `<button class="btn-complete${item.done ? ' is-done' : ''}" onclick="toggleItemDone('${panel}','${item.id}')">${item.done ? t('btn_reopen') : t('btn_complete')}</button>`;
       const actions = `<div class="card-actions">
-        ${priorityBtn}
         ${completeBtn}
         <button class="btn-icon" onclick="editItem('${panel}','${item.id}')" title="Edit">&#9998;</button>
         <button class="btn-icon del" onclick="confirmDelete('${panel}','${item.id}')" title="Delete">&#10005;</button>
@@ -1964,45 +1835,6 @@
         topContent = rightHtml
           ? `<div class="card-split"><div class="card-left">${leftHtml}</div>${rightHtml}</div>${linkDiv}`
           : `${leftHtml}${linkDiv}`;
-      } else {
-        const dateSpan = item.date
-          ? `<span class="card-date">&#128203; ${t('card_entry')}: ${fmtDate(item.date)}</span>`
-          : '';
-        const nm = nextMilestone(item);
-        const nextMsBadge = nm ? (() => {
-          const today = new Date(); today.setHours(0,0,0,0);
-          const [my,mm,md] = nm.date.split('-').map(Number);
-          const diff = Math.round((new Date(my,mm-1,md) - today) / 86400000);
-          const cls   = diff < 0 ? 'overdue' : diff === 0 ? 'today' : '';
-          const label = diff < 0 ? t('ms_overdue', Math.abs(diff)) : diff === 0 ? t('ms_today') : t('ms_in_days', diff);
-          return `<span class="next-ms-badge ${cls}">&#128204; ${label} &middot; ${esc(nm.name)}</span>`;
-        })() : '';
-        const ageDays = (() => {
-          if (!item.date || item.done) return 0;
-          const today = new Date(); today.setHours(0,0,0,0);
-          const [y,m,d] = item.date.split('-').map(Number);
-          return Math.round((today - new Date(y,m-1,d)) / 86400000);
-        })();
-        const ageBadge = ageDays >= qdrTargetDays
-          ? `<span class="age-badge">&#9201; ${ageDays}d old</span>` : '';
-        const leftHtml = `
-          <div class="card-title">${esc(item.name)}</div>
-          ${progressBar}
-          <div class="card-meta">
-            ${dayCircle(item.date)}
-            ${dateSpan}
-            ${nextMsBadge}
-            ${ageBadge}
-          </div>`;
-        const rightHtml = item.desc
-          ? `<div class="card-right"><div class="card-desc">${esc(item.desc)}</div></div>`
-          : '';
-        topContent = `
-          <div class="card-split">
-            <div class="card-left">${leftHtml}</div>
-            ${rightHtml}
-          </div>
-          ${linkDiv}`;
       }
 
       const isDraggable = panel === 'proj' && !item.done;
@@ -2010,16 +1842,9 @@
         ? `<span class="drag-handle" title="Drag to reorder">&#8942;&#8942;</span>`
         : '';
 
-      const priorityClass = (panel === 'qdr' && item.priority && !item.done) ? ' card--priority' : '';
-      const agedClass = (() => {
-        if (panel !== 'qdr' || item.done || !item.date) return '';
-        const today = new Date(); today.setHours(0,0,0,0);
-        const [y,m,d] = item.date.split('-').map(Number);
-        return Math.round((today - new Date(y,m-1,d)) / 86400000) >= qdrTargetDays ? ' card--aged' : '';
-      })();
       const doneClass = item.done ? ' card--done' : '';
       const hoverPin = todoDisplayMode === 'hover' ? ` onclick="handleCardHoverClick(event,'${item.id}')"` : '';
-      return `<div class="card${priorityClass}${agedClass}${doneClass}" data-id="${item.id}"${isDraggable ? ' draggable="true"' : ''}${hoverPin}>
+      return `<div class="card${doneClass}" data-id="${item.id}"${isDraggable ? ' draggable="true"' : ''}${hoverPin}>
         <div class="card-top">
           ${dragHandle}
           <div class="card-body">${topContent}</div>
@@ -2050,7 +1875,7 @@
     }
   }
 
-  function renderAll() { renderPanel('proj'); renderPanel('qdr'); }
+  function renderAll() { renderPanel('proj'); }
 
   // ── Drag & drop (projects) ────────────────────────────
   let dragSrcId = null;
@@ -2098,13 +1923,13 @@
     if (closedTodos.has(id)) closedTodos.delete(id);
     else closedTodos.add(id);
     // find which panel this item belongs to
-    const panel = data.proj.some(x => x.id === id) ? 'proj' : 'qdr';
+    const panel = 'proj';
     renderPanel(panel);
   }
 
   function toggleHoverPin(id) {
     pinnedHoverTodo = (pinnedHoverTodo === id) ? null : id;
-    renderPanel('proj'); renderPanel('qdr');
+    renderPanel('proj');
   }
 
   function handleCardHoverClick(e, id) {
@@ -2206,7 +2031,7 @@
   function toggleMilestones(id) {
     if (closedMilestones.has(id)) closedMilestones.delete(id);
     else closedMilestones.add(id);
-    renderPanel(data.proj.some(x => x.id === id) ? 'proj' : 'qdr');
+    renderPanel('proj');
   }
 
   function addMilestone(itemId) {
@@ -2214,7 +2039,7 @@
     const dateEl = document.getElementById(`ms-d-${itemId}`);
     const name = nameEl?.value.trim();
     if (!name) { nameEl?.focus(); return; }
-    const panel = data.proj.some(x => x.id === itemId) ? 'proj' : 'qdr';
+    const panel = 'proj';
     const item = data[panel].find(x => x.id === itemId);
     if (!item) return;
     if (!item.milestones) item.milestones = [];
@@ -2223,7 +2048,7 @@
   }
 
   function deleteMilestone(itemId, msId) {
-    const panel = data.proj.some(x => x.id === itemId) ? 'proj' : 'qdr';
+    const panel = 'proj';
     const item = data[panel].find(x => x.id === itemId);
     if (!item) return;
     item.milestones = (item.milestones ?? []).filter(m => m.id !== msId);
@@ -2231,7 +2056,7 @@
   }
 
   function toggleMilestoneDone(itemId, msId) {
-    const panel = data.proj.some(x => x.id === itemId) ? 'proj' : 'qdr';
+    const panel = 'proj';
     const item = data[panel].find(x => x.id === itemId);
     const ms   = item?.milestones?.find(m => m.id === msId);
     if (!ms) return;
@@ -2283,14 +2108,8 @@
     document.getElementById('modal-title').textContent =
       item ? t('modal_edit', panelLabelSingular(panel)) : t('modal_new', panelLabelSingular(panel));
 
-    // Show/hide QDR-only fields
-    document.getElementById('f-qdr-fields').style.display = panel === 'qdr' ? 'contents' : 'none';
-
     document.getElementById('f-name').value = item?.name ?? '';
     document.getElementById('f-link').value = item?.link ?? '';
-    if (panel === 'qdr') {
-      document.getElementById('f-date').value = item?.date ?? '';
-    }
     document.getElementById('f-desc').value       = item?.desc ?? '';
     document.getElementById('f-milestones').checked = item?.hasMilestones ?? false;
 
@@ -2322,9 +2141,6 @@
       priority: existing?.priority ?? false,
     };
 
-    if (panel === 'qdr') {
-      item.date = document.getElementById('f-date').value;
-    }
     item.desc          = document.getElementById('f-desc').value.trim();
     item.hasMilestones = document.getElementById('f-milestones').checked;
     item.milestones    = existing?.milestones ?? [];
@@ -2378,13 +2194,6 @@
     data[panel].splice(index, 0, item);
     save(); renderPanel(panel);
     dismissUndo();
-  }
-
-  function togglePriority(id) {
-    const item = data.qdr.find(x => x.id === id);
-    if (!item) return;
-    item.priority = !item.priority;
-    save(); renderPanel('qdr');
   }
 
   function editItem(panel, id) {
@@ -2442,7 +2251,7 @@
       b.classList.toggle('active', b.dataset.view === view)
     );
     if (view === 'calendar')     renderCalendar();
-    if (view === 'settings')     { renderLangGrid(); renderPanelNamesGrid(); renderTodoDisplayGrid(); renderColors(); renderColorVisionGrid(); loadQdrTarget(); loadCalSettings(); renderDataStats(); renderFortune(); }
+    if (view === 'settings')     { renderLangGrid(); renderPanelNamesGrid(); renderTodoDisplayGrid(); renderColors(); renderColorVisionGrid(); loadCalSettings(); renderDataStats(); renderFortune(); }
     if (view === 'achievements') renderAchievements();
     if (view === 'open-todos')   renderOpenTodos();
   }
@@ -2480,7 +2289,6 @@
       });
     };
     addTodos(data.proj, 'proj');
-    addTodos(data.qdr,  'qdr');
     return dl;
   }
 
@@ -2524,10 +2332,8 @@
         const ds     = `${year}-${String(month+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
         const events = calDeadlines[ds] ?? [];
         const projEvts = events.filter(e => e.panel === 'proj');
-        const qdrEvts  = events.filter(e => e.panel === 'qdr');
         const projDot  = projEvts.length ? `<span class="cal-dot cal-dot--proj${projEvts.every(e => e.done || e.itemDone) ? ' cal-dot--faded' : ''}"></span>` : '';
-        const qdrDot   = qdrEvts.length  ? `<span class="cal-dot cal-dot--qdr${qdrEvts.every(e => e.done || e.itemDone)  ? ' cal-dot--faded' : ''}"></span>` : '';
-        const dots     = (projDot || qdrDot) ? `<div class="cal-dots">${projDot}${qdrDot}</div>` : '';
+        const dots     = projDot ? `<div class="cal-dots">${projDot}</div>` : '';
         const sel   = ds === selectedCalDate;
         const hover = events.length ? `onmouseenter="showCalTip(this,'${ds}')" onmouseleave="hideCalTip()"` : '';
         const click = events.length ? `onclick="selectCalDate('${ds}')"` : '';
@@ -2786,158 +2592,140 @@
       name: 'Default',
       vars: { '--bg':'#f3f4f8','--surface':'#ffffff','--surface2':'#e8ebf3','--border':'#c8cedc',
         '--text':'#0f172a','--muted':'#64748b',
-        '--proj-a':'#1e3a8a','--proj-b':'#2563eb','--qdr-a':'#134e4a','--qdr-b':'#0f766e',
-        '--header-bg':'rgba(243,244,248,.94)','--tabbar-bg':'rgba(243,244,248,.90)',
+        '--proj-a':'#1e3a8a','--proj-b':'#2563eb',        '--header-bg':'rgba(243,244,248,.94)','--tabbar-bg':'rgba(243,244,248,.90)',
         '--bg-glow-a':'rgba(30,58,138,.06)','--bg-glow-b':'rgba(19,78,74,.05)','--bg-glow-c':'rgba(37,99,235,.04)' }
     },
     light: {
       name: 'Happy',
       vars: { '--bg':'#f1f4fb','--surface':'#ffffff','--surface2':'#e8ecf6','--border':'#c8d0e8',
         '--text':'#1e2140','--muted':'#64748b',
-        '--proj-a':'#7c3aed','--proj-b':'#db2777','--qdr-a':'#0284c7','--qdr-b':'#16a34a',
-        '--header-bg':'rgba(241,244,251,.92)','--tabbar-bg':'rgba(241,244,251,.88)',
+        '--proj-a':'#7c3aed','--proj-b':'#db2777',        '--header-bg':'rgba(241,244,251,.92)','--tabbar-bg':'rgba(241,244,251,.88)',
         '--bg-glow-a':'rgba(124,58,237,.08)','--bg-glow-b':'rgba(2,132,199,.06)','--bg-glow-c':'rgba(219,39,119,.06)' }
     },
     dark: {
       name: 'Emo',
       vars: { '--bg':'#000000','--surface':'#080808','--surface2':'#0f0f0f','--border':'#1c1c1c',
         '--text':'#e2e8f0','--muted':'#64748b',
-        '--proj-a':'#8b5cf6','--proj-b':'#ec4899','--qdr-a':'#22d3ee','--qdr-b':'#86efac',
-        '--header-bg':'rgba(8,8,8,.95)','--tabbar-bg':'rgba(8,8,8,.9)',
+        '--proj-a':'#8b5cf6','--proj-b':'#ec4899',        '--header-bg':'rgba(8,8,8,.95)','--tabbar-bg':'rgba(8,8,8,.9)',
         '--bg-glow-a':'rgba(139,92,246,.10)','--bg-glow-b':'rgba(34,211,238,.08)','--bg-glow-c':'rgba(236,72,153,.07)' }
     },
     fuchsia: {
       name: 'Fuchsia',
       vars: { '--bg':'#fdf4ff','--surface':'#ffffff','--surface2':'#fae8ff','--border':'#e9d5f5',
         '--text':'#3b0764','--muted':'#a855f7',
-        '--proj-a':'#a21caf','--proj-b':'#c026d3','--qdr-a':'#7e22ce','--qdr-b':'#9333ea',
-        '--header-bg':'rgba(253,244,255,.94)','--tabbar-bg':'rgba(253,244,255,.90)',
+        '--proj-a':'#a21caf','--proj-b':'#c026d3',        '--header-bg':'rgba(253,244,255,.94)','--tabbar-bg':'rgba(253,244,255,.90)',
         '--bg-glow-a':'rgba(162,28,175,.08)','--bg-glow-b':'rgba(126,34,206,.06)','--bg-glow-c':'rgba(192,38,211,.05)' }
     },
     ocean: {
       name: 'Ocean',
       vars: { '--bg':'#f0f8ff','--surface':'#ffffff','--surface2':'#e0f2fe','--border':'#bae6fd',
         '--text':'#0c2a4a','--muted':'#0369a1',
-        '--proj-a':'#0369a1','--proj-b':'#0ea5e9','--qdr-a':'#4338ca','--qdr-b':'#6366f1',
-        '--header-bg':'rgba(240,248,255,.94)','--tabbar-bg':'rgba(240,248,255,.90)',
+        '--proj-a':'#0369a1','--proj-b':'#0ea5e9',        '--header-bg':'rgba(240,248,255,.94)','--tabbar-bg':'rgba(240,248,255,.90)',
         '--bg-glow-a':'rgba(3,105,161,.08)','--bg-glow-b':'rgba(67,56,202,.06)','--bg-glow-c':'rgba(14,165,233,.05)' }
     },
     gray: {
       name: 'Gray',
       vars: { '--bg':'#080808','--surface':'#111111','--surface2':'#1a1a1a','--border':'#282828',
         '--text':'#e5e7eb','--muted':'#6b7280',
-        '--proj-a':'#9ca3af','--proj-b':'#d1d5db','--qdr-a':'#6b7280','--qdr-b':'#9ca3af',
-        '--header-bg':'rgba(17,17,17,.9)','--tabbar-bg':'rgba(17,17,17,.8)',
+        '--proj-a':'#9ca3af','--proj-b':'#d1d5db',        '--header-bg':'rgba(17,17,17,.9)','--tabbar-bg':'rgba(17,17,17,.8)',
         '--bg-glow-a':'rgba(156,163,175,.06)','--bg-glow-b':'rgba(107,114,128,.04)','--bg-glow-c':'rgba(209,213,219,.04)' }
     },
     disco: {
       name: 'Disco Inferno',
       vars: { '--bg':'#0a0906','--surface':'#141008','--surface2':'#1e1a0c','--border':'#332c10',
         '--text':'#ffd700','--muted':'#8a7830',
-        '--proj-a':'#ff1493','--proj-b':'#ffee00','--qdr-a':'#00bfff','--qdr-b':'#ff6600',
-        '--header-bg':'rgba(20,16,8,.93)','--tabbar-bg':'rgba(20,16,8,.86)',
+        '--proj-a':'#ff1493','--proj-b':'#ffee00',        '--header-bg':'rgba(20,16,8,.93)','--tabbar-bg':'rgba(20,16,8,.86)',
         '--bg-glow-a':'rgba(255,20,147,.18)','--bg-glow-b':'rgba(0,191,255,.12)','--bg-glow-c':'rgba(255,102,0,.12)' }
     },
     coral: {
       name: 'Haunted Coral',
       vars: { '--bg':'#080400','--surface':'#120900','--surface2':'#1c1100','--border':'#301e08',
         '--text':'#ff9e9e','--muted':'#7a4e3a',
-        '--proj-a':'#ff4500','--proj-b':'#40e0d0','--qdr-a':'#7cfc00','--qdr-b':'#ff69b4',
-        '--header-bg':'rgba(18,9,0,.93)','--tabbar-bg':'rgba(18,9,0,.86)',
+        '--proj-a':'#ff4500','--proj-b':'#40e0d0',        '--header-bg':'rgba(18,9,0,.93)','--tabbar-bg':'rgba(18,9,0,.86)',
         '--bg-glow-a':'rgba(255,69,0,.18)','--bg-glow-b':'rgba(124,252,0,.10)','--bg-glow-c':'rgba(64,224,208,.10)' }
     },
     voodoo: {
       name: 'Digital Voodoo',
       vars: { '--bg':'#020106','--surface':'#07040e','--surface2':'#0e0818','--border':'#1c1030',
         '--text':'#adff2f','--muted':'#5a6a30',
-        '--proj-a':'#bf00ff','--proj-b':'#ff4500','--qdr-a':'#00ced1','--qdr-b':'#ff69b4',
-        '--header-bg':'rgba(7,4,14,.93)','--tabbar-bg':'rgba(7,4,14,.86)',
+        '--proj-a':'#bf00ff','--proj-b':'#ff4500',        '--header-bg':'rgba(7,4,14,.93)','--tabbar-bg':'rgba(7,4,14,.86)',
         '--bg-glow-a':'rgba(191,0,255,.18)','--bg-glow-b':'rgba(0,206,209,.12)','--bg-glow-c':'rgba(255,69,0,.12)' }
     },
     blackhole: {
       name: 'Black Hole',
       vars: { '--bg':'#050402','--surface':'#0e0b05','--surface2':'#1a1409','--border':'#2e2410',
         '--text':'#fff8f0','--muted':'#a07850',
-        '--proj-a':'#f97316','--proj-b':'#fb923c','--qdr-a':'#fbbf24','--qdr-b':'#f59e0b',
-        '--header-bg':'rgba(14,11,5,.92)','--tabbar-bg':'rgba(14,11,5,.85)',
+        '--proj-a':'#f97316','--proj-b':'#fb923c',        '--header-bg':'rgba(14,11,5,.92)','--tabbar-bg':'rgba(14,11,5,.85)',
         '--bg-glow-a':'rgba(249,115,22,.18)','--bg-glow-b':'rgba(251,191,36,.10)','--bg-glow-c':'rgba(251,146,60,.10)' }
     },
     mint: {
       name: 'Mint',
       vars: { '--bg':'#f0faf5','--surface':'#ffffff','--surface2':'#e2f5ec','--border':'#b6d9c6',
         '--text':'#1a3028','--muted':'#4a7c63',
-        '--proj-a':'#059669','--proj-b':'#0d9488','--qdr-a':'#0284c7','--qdr-b':'#16a34a',
-        '--header-bg':'rgba(240,250,245,.93)','--tabbar-bg':'rgba(240,250,245,.88)',
+        '--proj-a':'#059669','--proj-b':'#0d9488',        '--header-bg':'rgba(240,250,245,.93)','--tabbar-bg':'rgba(240,250,245,.88)',
         '--bg-glow-a':'rgba(5,150,105,.09)','--bg-glow-b':'rgba(2,132,199,.07)','--bg-glow-c':'rgba(13,148,136,.06)' }
     },
     sunrise: {
       name: 'Sunrise',
       vars: { '--bg':'#fff7f0','--surface':'#ffffff','--surface2':'#feeee0','--border':'#f0c9b0',
         '--text':'#3d1f0a','--muted':'#8b5e3c',
-        '--proj-a':'#ea580c','--proj-b':'#dc2626','--qdr-a':'#d97706','--qdr-b':'#ca8a04',
-        '--header-bg':'rgba(255,247,240,.93)','--tabbar-bg':'rgba(255,247,240,.88)',
+        '--proj-a':'#ea580c','--proj-b':'#dc2626',        '--header-bg':'rgba(255,247,240,.93)','--tabbar-bg':'rgba(255,247,240,.88)',
         '--bg-glow-a':'rgba(234,88,12,.09)','--bg-glow-b':'rgba(217,119,6,.07)','--bg-glow-c':'rgba(220,38,38,.06)' }
     },
     lavender: {
       name: 'Lavender',
       vars: { '--bg':'#f5f0ff','--surface':'#ffffff','--surface2':'#ede6ff','--border':'#cfc0f5',
         '--text':'#2d1f4a','--muted':'#7c6fa0',
-        '--proj-a':'#7c3aed','--proj-b':'#9333ea','--qdr-a':'#db2777','--qdr-b':'#e879f9',
-        '--header-bg':'rgba(245,240,255,.93)','--tabbar-bg':'rgba(245,240,255,.88)',
+        '--proj-a':'#7c3aed','--proj-b':'#9333ea',        '--header-bg':'rgba(245,240,255,.93)','--tabbar-bg':'rgba(245,240,255,.88)',
         '--bg-glow-a':'rgba(124,58,237,.09)','--bg-glow-b':'rgba(219,39,119,.07)','--bg-glow-c':'rgba(147,51,234,.06)' }
     },
     lightblue: {
       name: 'Light Blue',
       vars: { '--bg':'#f0f8ff','--surface':'#ffffff','--surface2':'#e1f0fd','--border':'#b8d9f5',
         '--text':'#0f2d4a','--muted':'#4a7fa8',
-        '--proj-a':'#0369a1','--proj-b':'#0284c7','--qdr-a':'#0ea5e9','--qdr-b':'#38bdf8',
-        '--header-bg':'rgba(240,248,255,.93)','--tabbar-bg':'rgba(240,248,255,.88)',
+        '--proj-a':'#0369a1','--proj-b':'#0284c7',        '--header-bg':'rgba(240,248,255,.93)','--tabbar-bg':'rgba(240,248,255,.88)',
         '--bg-glow-a':'rgba(3,105,161,.09)','--bg-glow-b':'rgba(14,165,233,.07)','--bg-glow-c':'rgba(2,132,199,.06)' }
     },
     mayan: {
       name: 'Mayan Prophecy',
       vars: { '--bg':'#06080e','--surface':'#0a0f1c','--surface2':'#0f1828','--border':'#1e2a10',
         '--text':'#f5e842','--muted':'#7a8050',
-        '--proj-a':'#ff003c','--proj-b':'#ff6a00','--qdr-a':'#00ffaa','--qdr-b':'#9d00ff',
-        '--header-bg':'rgba(10,15,28,.93)','--tabbar-bg':'rgba(10,15,28,.86)',
+        '--proj-a':'#ff003c','--proj-b':'#ff6a00',        '--header-bg':'rgba(10,15,28,.93)','--tabbar-bg':'rgba(10,15,28,.86)',
         '--bg-glow-a':'rgba(255,0,60,.18)','--bg-glow-b':'rgba(0,255,170,.12)','--bg-glow-c':'rgba(157,0,255,.10)' }
     },
     plutonium: {
       name: 'Plutonium',
       vars: { '--bg':'#00080c','--surface':'#001018','--surface2':'#001a26','--border':'#003848',
         '--text':'#ccffee','--muted':'#40b090',
-        '--proj-a':'#00ff41','--proj-b':'#ff006e','--qdr-a':'#ffff00','--qdr-b':'#ff6200',
-        '--header-bg':'rgba(0,16,24,.93)','--tabbar-bg':'rgba(0,16,24,.86)',
+        '--proj-a':'#00ff41','--proj-b':'#ff006e',        '--header-bg':'rgba(0,16,24,.93)','--tabbar-bg':'rgba(0,16,24,.86)',
         '--bg-glow-a':'rgba(0,255,65,.22)','--bg-glow-b':'rgba(255,0,110,.18)','--bg-glow-c':'rgba(255,255,0,.14)' }
     },
     rave: {
       name: 'Rave Cave',
       vars: { '--bg':'#0d0020','--surface':'#160038','--surface2':'#1e0050','--border':'#360080',
         '--text':'#ffffff','--muted':'#a880d8',
-        '--proj-a':'#ff00ff','--proj-b':'#ffff00','--qdr-a':'#00ffff','--qdr-b':'#ff4400',
-        '--header-bg':'rgba(22,0,56,.93)','--tabbar-bg':'rgba(22,0,56,.86)',
+        '--proj-a':'#ff00ff','--proj-b':'#ffff00',        '--header-bg':'rgba(22,0,56,.93)','--tabbar-bg':'rgba(22,0,56,.86)',
         '--bg-glow-a':'rgba(255,0,255,.22)','--bg-glow-b':'rgba(0,255,255,.18)','--bg-glow-c':'rgba(255,255,0,.14)' }
     },
     lemonacid: {
       name: 'Lemon Acid',
       vars: { '--bg':'#000c1a','--surface':'#001028','--surface2':'#00163c','--border':'#002860',
         '--text':'#ffff00','--muted':'#aaaa00',
-        '--proj-a':'#ff00aa','--proj-b':'#aa00ff','--qdr-a':'#00ff88','--qdr-b':'#ff4400',
-        '--header-bg':'rgba(0,16,40,.93)','--tabbar-bg':'rgba(0,16,40,.86)',
+        '--proj-a':'#ff00aa','--proj-b':'#aa00ff',        '--header-bg':'rgba(0,16,40,.93)','--tabbar-bg':'rgba(0,16,40,.86)',
         '--bg-glow-a':'rgba(255,255,0,.20)','--bg-glow-b':'rgba(255,0,170,.16)','--bg-glow-c':'rgba(0,255,136,.14)' }
     }
   };
 
   // ── Panel name sets ───────────────────────────────────
   const PANEL_NAMES = {
-    default:    { id: 'default',    proj: 'Projects', qdr: 'QDRs',      proj_s: 'Project',  qdr_s: 'QDR',     icon_proj: '&#128193;', icon_qdr: '&#9889;' },
-    marathon:   { id: 'marathon',   proj: 'Marathon',  qdr: 'Sprint',   proj_s: 'Marathon', qdr_s: 'Sprint',  icon_proj: '&#127939;', icon_qdr: '&#9889;' },
-    epics:      { id: 'epics',      proj: 'Epics',     qdr: 'Sprints',  proj_s: 'Epic',     qdr_s: 'Sprint',  icon_proj: '&#128203;', icon_qdr: '&#9889;' },
-    goals:      { id: 'goals',      proj: 'Goals',     qdr: 'Tasks',    proj_s: 'Goal',     qdr_s: 'Task',    icon_proj: '&#127919;', icon_qdr: '&#9989;' },
-    campaigns:  { id: 'campaigns',  proj: 'Campaigns', qdr: 'Missions', proj_s: 'Campaign', qdr_s: 'Mission', icon_proj: '&#128640;', icon_qdr: '&#9889;' },
-    quests:     { id: 'quests',     proj: 'Quests',    qdr: 'Bounties', proj_s: 'Quest',    qdr_s: 'Bounty',  icon_proj: '&#9876;',   icon_qdr: '&#128142;' },
-    yinyang:    { id: 'yinyang',    proj: 'Yin',       qdr: 'Yang',     proj_s: 'Yin',      qdr_s: 'Yang',    icon_proj: '&#9775;',   icon_qdr: '&#9775;' },
-    custom:     { id: 'custom',     proj: 'Custom',    qdr: 'Custom',   proj_s: 'Custom',   qdr_s: 'Custom',  icon_proj: '&#9998;',   icon_qdr: '&#9998;' },
+    default:    { id: 'default',    proj: 'Projects',  proj_s: 'Project',  icon_proj: '&#128193;' },
+    marathon:   { id: 'marathon',   proj: 'Marathon',  proj_s: 'Marathon', icon_proj: '&#127939;' },
+    epics:      { id: 'epics',      proj: 'Epics',     proj_s: 'Epic',    icon_proj: '&#128203;' },
+    goals:      { id: 'goals',      proj: 'Goals',     proj_s: 'Goal',    icon_proj: '&#127919;' },
+    campaigns:  { id: 'campaigns',  proj: 'Campaigns', proj_s: 'Campaign', icon_proj: '&#128640;' },
+    quests:     { id: 'quests',     proj: 'Quests',    proj_s: 'Quest',   icon_proj: '&#9876;' },
+    yinyang:    { id: 'yinyang',    proj: 'Yin',       proj_s: 'Yin',     icon_proj: '&#9775;' },
+    custom:     { id: 'custom',     proj: 'Custom',    proj_s: 'Custom',  icon_proj: '&#9998;' },
   };
 
   // ── Internationalisation ──────────────────────────────
@@ -2952,7 +2740,7 @@
       h_data:'💾 Data & Backup', h_fortune:'🍪 Fortune Cookie', h_about:'ℹ About',
       fortune_desc:'One fortune per day. Crack the cookie and see what the universe has to say.',
       modal_name_lbl:'Name / Title', modal_date_lbl:'Entry Date', modal_desc_lbl:'Description / Notes', modal_link_lbl:'Link (URL)',
-      modal_name_ph:'e.g. Alpha Initiative or QDR-042', modal_desc_ph:'Short description…', modal_link_ph:'https://…',
+      modal_name_ph:'e.g. Alpha Initiative', modal_desc_ph:'Short description…', modal_link_ph:'https://…',
       modal_save:'Save', modal_cancel:'Cancel', modal_new:'New {0}', modal_edit:'Edit {0}',
       confirm_body:'This cannot be undone.', confirm_delete:'Delete', confirm_cancel:'Cancel',
       undo_deleted:'"{0}" deleted', undo_btn:'Undo',
@@ -3009,7 +2797,7 @@
       h_data:'💾 Daten & Backup', h_fortune:'🍪 Glückskeks', h_about:'ℹ Über',
       fortune_desc:'Ein Glücksmotto pro Tag. Klicke den Keks und sieh, was das Universum zu sagen hat.',
       modal_name_lbl:'Name / Titel', modal_date_lbl:'Eingabedatum', modal_desc_lbl:'Beschreibung / Notizen', modal_link_lbl:'Link (URL)',
-      modal_name_ph:'z.B. Alpha-Initiative oder QDR-042', modal_desc_ph:'Kurze Beschreibung…', modal_link_ph:'https://…',
+      modal_name_ph:'z.B. Alpha-Initiative', modal_desc_ph:'Kurze Beschreibung…', modal_link_ph:'https://…',
       modal_save:'Speichern', modal_cancel:'Abbrechen', modal_new:'Neues {0}', modal_edit:'{0} bearbeiten',
       confirm_body:'Diese Aktion kann nicht rückgängig gemacht werden.', confirm_delete:'Löschen', confirm_cancel:'Abbrechen',
       undo_deleted:'„{0}" gelöscht', undo_btn:'Rückgängig',
@@ -3066,7 +2854,7 @@
       h_data:'💾 Datos y Copia de Seguridad', h_fortune:'🍪 Galleta de la Fortuna', h_about:'ℹ Acerca de',
       fortune_desc:'Una fortuna por día. Abre la galleta y ve qué tiene que decirte el universo.',
       modal_name_lbl:'Nombre / Título', modal_date_lbl:'Fecha de entrada', modal_desc_lbl:'Descripción / Notas', modal_link_lbl:'Enlace (URL)',
-      modal_name_ph:'ej. Iniciativa Alpha o QDR-042', modal_desc_ph:'Descripción breve…', modal_link_ph:'https://…',
+      modal_name_ph:'ej. Iniciativa Alpha', modal_desc_ph:'Descripción breve…', modal_link_ph:'https://…',
       modal_save:'Guardar', modal_cancel:'Cancelar', modal_new:'Nuevo {0}', modal_edit:'Editar {0}',
       confirm_body:'Esta acción no se puede deshacer.', confirm_delete:'Eliminar', confirm_cancel:'Cancelar',
       undo_deleted:'"{0}" eliminado', undo_btn:'Deshacer',
@@ -3123,7 +2911,7 @@
       h_data:'💾 Données & Sauvegarde', h_fortune:'🍪 Cookie de Fortune', h_about:'ℹ À propos',
       fortune_desc:'Une fortune par jour. Craquez le cookie et voyez ce que l\'univers a à vous dire.',
       modal_name_lbl:'Nom / Titre', modal_date_lbl:'Date d\'entrée', modal_desc_lbl:'Description / Notes', modal_link_lbl:'Lien (URL)',
-      modal_name_ph:'ex. Initiative Alpha ou QDR-042', modal_desc_ph:'Courte description…', modal_link_ph:'https://…',
+      modal_name_ph:'ex. Initiative Alpha', modal_desc_ph:'Courte description…', modal_link_ph:'https://…',
       modal_save:'Enregistrer', modal_cancel:'Annuler', modal_new:'Nouveau {0}', modal_edit:'Modifier {0}',
       confirm_body:'Cette action est irréversible.', confirm_delete:'Supprimer', confirm_cancel:'Annuler',
       undo_deleted:'« {0} » supprimé', undo_btn:'Annuler',
@@ -3180,7 +2968,7 @@
       h_data:'💾 Dati & Backup', h_fortune:'🍪 Biscotto della Fortuna', h_about:'ℹ Informazioni',
       fortune_desc:'Una fortuna al giorno. Rompi il biscotto e scopri cosa ha da dirti l\'universo.',
       modal_name_lbl:'Nome / Titolo', modal_date_lbl:'Data di inserimento', modal_desc_lbl:'Descrizione / Note', modal_link_lbl:'Link (URL)',
-      modal_name_ph:'es. Iniziativa Alpha o QDR-042', modal_desc_ph:'Breve descrizione…', modal_link_ph:'https://…',
+      modal_name_ph:'es. Iniziativa Alpha', modal_desc_ph:'Breve descrizione…', modal_link_ph:'https://…',
       modal_save:'Salva', modal_cancel:'Annulla', modal_new:'Nuovo {0}', modal_edit:'Modifica {0}',
       confirm_body:'Questa azione non può essere annullata.', confirm_delete:'Elimina', confirm_cancel:'Annulla',
       undo_deleted:'"{0}" eliminato', undo_btn:'Annulla',
@@ -3237,7 +3025,7 @@
       h_data:'💾 数据与备份', h_fortune:'🍪 幸运饼干', h_about:'ℹ 关于',
       fortune_desc:'每天一条运势。点击饼干，听听宇宙想说什么。',
       modal_name_lbl:'名称 / 标题', modal_date_lbl:'录入日期', modal_desc_lbl:'描述 / 备注', modal_link_lbl:'链接（URL）',
-      modal_name_ph:'例：Alpha 计划或 QDR-042', modal_desc_ph:'简短描述…', modal_link_ph:'https://…',
+      modal_name_ph:'例：Alpha 计划', modal_desc_ph:'简短描述…', modal_link_ph:'https://…',
       modal_save:'保存', modal_cancel:'取消', modal_new:'新建 {0}', modal_edit:'编辑 {0}',
       confirm_body:'此操作无法撤销。', confirm_delete:'删除', confirm_cancel:'取消',
       undo_deleted:'已删除"{0}"', undo_btn:'撤销',
@@ -3294,7 +3082,7 @@
       h_data:'💾 データ & バックアップ', h_fortune:'🍪 フォーチュンクッキー', h_about:'ℹ このアプリについて',
       fortune_desc:'1日1回の運勢。クッキーをクリックして、宇宙からのメッセージを受け取りましょう。',
       modal_name_lbl:'名前 / タイトル', modal_date_lbl:'登録日', modal_desc_lbl:'説明 / メモ', modal_link_lbl:'リンク（URL）',
-      modal_name_ph:'例：アルファ計画 または QDR-042', modal_desc_ph:'短い説明…', modal_link_ph:'https://…',
+      modal_name_ph:'例：アルファ計画', modal_desc_ph:'短い説明…', modal_link_ph:'https://…',
       modal_save:'保存', modal_cancel:'キャンセル', modal_new:'新規 {0}', modal_edit:'{0} を編集',
       confirm_body:'この操作は取り消せません。', confirm_delete:'削除', confirm_cancel:'キャンセル',
       undo_deleted:'「{0}」を削除しました', undo_btn:'元に戻す',
@@ -3351,7 +3139,7 @@
       h_data:'💾 데이터 및 백업', h_fortune:'🍪 포춘 쿠키', h_about:'ℹ 정보',
       fortune_desc:'하루 한 번의 운세. 쿠키를 클릭하고 우주가 전하는 말을 들어보세요.',
       modal_name_lbl:'이름 / 제목', modal_date_lbl:'입력일', modal_desc_lbl:'설명 / 메모', modal_link_lbl:'링크 (URL)',
-      modal_name_ph:'예: 알파 이니셔티브 또는 QDR-042', modal_desc_ph:'간단한 설명…', modal_link_ph:'https://…',
+      modal_name_ph:'예: 알파 이니셔티브', modal_desc_ph:'간단한 설명…', modal_link_ph:'https://…',
       modal_save:'저장', modal_cancel:'취소', modal_new:'새 {0}', modal_edit:'{0} 편집',
       confirm_body:'이 작업은 취소할 수 없습니다.', confirm_delete:'삭제', confirm_cancel:'취소',
       undo_deleted:'"{0}" 삭제됨', undo_btn:'실행 취소',
@@ -3408,7 +3196,7 @@
       h_data:'💾 Dados & Backup', h_fortune:'🍪 Biscoito da Sorte', h_about:'ℹ Sobre',
       fortune_desc:'Uma fortuna por dia. Abra o biscoito e veja o que o universo tem a dizer.',
       modal_name_lbl:'Nome / Título', modal_date_lbl:'Data de Entrada', modal_desc_lbl:'Descrição / Notas', modal_link_lbl:'Link (URL)',
-      modal_name_ph:'ex. Iniciativa Alpha ou QDR-042', modal_desc_ph:'Descrição breve…', modal_link_ph:'https://…',
+      modal_name_ph:'ex. Iniciativa Alpha', modal_desc_ph:'Descrição breve…', modal_link_ph:'https://…',
       modal_save:'Salvar', modal_cancel:'Cancelar', modal_new:'Novo {0}', modal_edit:'Editar {0}',
       confirm_body:'Esta ação não pode ser desfeita.', confirm_delete:'Excluir', confirm_cancel:'Cancelar',
       undo_deleted:'"{0}" excluído', undo_btn:'Desfazer',
@@ -3465,7 +3253,7 @@
       h_data:'💾 Adatok & Mentés', h_fortune:'🍪 Szerencse Süti', h_about:'ℹ Névjegy',
       fortune_desc:'Naponta egy szerencse. Kattints a sütire, és hallgasd meg, mit üzen az univerzum.',
       modal_name_lbl:'Név / Cím', modal_date_lbl:'Rögzítés dátuma', modal_desc_lbl:'Leírás / Megjegyzések', modal_link_lbl:'Link (URL)',
-      modal_name_ph:'pl. Alfa Kezdeményezés vagy QDR-042', modal_desc_ph:'Rövid leírás…', modal_link_ph:'https://…',
+      modal_name_ph:'pl. Alfa Kezdeményezés', modal_desc_ph:'Rövid leírás…', modal_link_ph:'https://…',
       modal_save:'Mentés', modal_cancel:'Mégse', modal_new:'Új {0}', modal_edit:'{0} szerkesztése',
       confirm_body:'Ez a művelet nem vonható vissza.', confirm_delete:'Törlés', confirm_cancel:'Mégse',
       undo_deleted:'„{0}" törölve', undo_btn:'Visszavonás',
@@ -3522,7 +3310,7 @@
       h_data:'💾 Data og sikkerhedskopi', h_fortune:'🍪 Lykkehjul', h_about:'ℹ Om',
       fortune_desc:'Én lykke om dagen. Knæk kagen og se hvad universet har at sige.',
       modal_name_lbl:'Navn / Titel', modal_date_lbl:'Indgangsdato', modal_desc_lbl:'Beskrivelse / Noter', modal_link_lbl:'Link (URL)',
-      modal_name_ph:'f.eks. Alpha-initiativ eller QDR-042', modal_desc_ph:'Kort beskrivelse…', modal_link_ph:'https://…',
+      modal_name_ph:'f.eks. Alpha-initiativ', modal_desc_ph:'Kort beskrivelse…', modal_link_ph:'https://…',
       modal_save:'Gem', modal_cancel:'Annuller', modal_new:'Ny {0}', modal_edit:'Rediger {0}',
       confirm_body:'Dette kan ikke fortrydes.', confirm_delete:'Slet', confirm_cancel:'Annuller',
       undo_deleted:'"{0}" slettet', undo_btn:'Fortryd',
@@ -3657,15 +3445,11 @@
     localStorage.setItem('qe_panel_names', id);
     // Update static HTML elements
     document.getElementById('h-proj-label').textContent = set.proj;
-    document.getElementById('h-qdr-label').textContent  = set.qdr;
     document.getElementById('proj-title-label').innerHTML = set.icon_proj + ' ' + set.proj;
-    document.getElementById('qdr-title-label').innerHTML  = set.icon_qdr  + ' ' + set.qdr;
     document.getElementById('btn-add-proj').textContent = t('add_item', set.proj_s);
-    document.getElementById('btn-add-qdr').textContent  = t('add_item', set.qdr_s);
     document.getElementById('search-proj').placeholder  = t('search_ph', set.proj.toLowerCase());
-    document.getElementById('search-qdr').placeholder   = t('search_ph', set.qdr.toLowerCase());
     const cvSub = document.getElementById('cv-subtitle');
-    if (cvSub) cvSub.innerHTML = t('cv_sub_text', set.proj.toLowerCase(), set.qdr.toLowerCase());
+    if (cvSub) cvSub.innerHTML = t('cv_sub_text', set.proj.toLowerCase());
     if (rerender) {
       renderAll();
       if (currentView === 'settings') { renderPanelNamesGrid(); renderDataStats(); }
@@ -3676,9 +3460,8 @@
     const savedCustom = localStorage.getItem('qe_panel_custom');
     if (savedCustom) {
       try {
-        const { proj, qdr } = JSON.parse(savedCustom);
+        const { proj } = JSON.parse(savedCustom);
         if (proj) { PANEL_NAMES.custom.proj = proj; PANEL_NAMES.custom.proj_s = proj; }
-        if (qdr)  { PANEL_NAMES.custom.qdr  = qdr;  PANEL_NAMES.custom.qdr_s  = qdr;  }
       } catch(e) {}
     }
     const saved = localStorage.getItem('qe_panel_names') || 'default';
@@ -3735,10 +3518,8 @@
 
   function applyCustomPanelNames() {
     const proj = (document.getElementById('pname-custom-proj')?.value || '').trim() || 'Custom';
-    const qdr  = (document.getElementById('pname-custom-qdr')?.value  || '').trim() || 'Custom';
     PANEL_NAMES.custom.proj = PANEL_NAMES.custom.proj_s = proj;
-    PANEL_NAMES.custom.qdr  = PANEL_NAMES.custom.qdr_s  = qdr;
-    localStorage.setItem('qe_panel_custom', JSON.stringify({ proj, qdr }));
+    localStorage.setItem('qe_panel_custom', JSON.stringify({ proj }));
     applyPanelNames('custom');
   }
 
@@ -3750,19 +3531,11 @@
       if (set.id === 'custom') {
         const cv = PANEL_NAMES.custom;
         const projVal = (cv.proj === 'Custom') ? '' : cv.proj;
-        const qdrVal  = (cv.qdr  === 'Custom') ? '' : cv.qdr;
         return `<div class="pname-card custom-card${sel ? ' selected' : ''}">
           <div class="pname-custom-row">
             <span class="pname-custom-label">&#128193;</span>
             <input id="pname-custom-proj" class="pname-custom-input" type="text"
               placeholder="Ice" value="${projVal}"
-              onclick="event.stopPropagation()"
-              onkeydown="if(event.key==='Enter')applyCustomPanelNames()">
-          </div>
-          <div class="pname-custom-row">
-            <span class="pname-custom-label">&#9889;</span>
-            <input id="pname-custom-qdr" class="pname-custom-input" type="text"
-              placeholder="Fire" value="${qdrVal}"
               onclick="event.stopPropagation()"
               onkeydown="if(event.key==='Enter')applyCustomPanelNames()">
           </div>
@@ -3773,15 +3546,12 @@
       return `<div class="pname-card${sel ? ' selected' : ''}" onclick="applyPanelNames('${set.id}')">
         <div class="pname-pair">
           <span class="pname-a">${set.proj}</span>
-          <span class="pname-sep">&#10230;</span>
-          <span class="pname-b">${set.qdr}</span>
         </div>
         ${sel ? '<div class="pname-check">&#10003;</div>' : ''}
       </div>`;
     }).join('');
   }
 
-  let qdrTargetDays = 14;
   let colorVisionMode = 'standard';
   let currentTheme = 'default';
   let colorMode = 'light';
@@ -3851,26 +3621,6 @@
     if (currentView === 'calendar') renderCalendar();
   }
 
-  // ── QDR Age Alert ──────────────────────────────────────
-  function loadQdrTarget() {
-    qdrTargetDays = Math.max(1, parseInt(localStorage.getItem('qe_qdr_target') || '14') || 14);
-    const el = document.getElementById('qdr-target-days');
-    if (el) el.value = qdrTargetDays;
-    const label = panelLabel('qdr');
-    const h = document.getElementById('qdr-alert-heading');
-    if (h) h.textContent = t('age_alert_title', label);
-    const sub = document.getElementById('qdr-alert-sub');
-    if (sub) sub.textContent = t('age_alert_sub', label);
-    const lbl = document.getElementById('qdr-alert-lbl');
-    if (lbl) lbl.textContent = t('age_alert_lbl', label.toLowerCase());
-  }
-
-  function saveQdrTarget(val) {
-    qdrTargetDays = Math.max(1, Math.min(999, parseInt(val) || 14));
-    localStorage.setItem('qe_qdr_target', qdrTargetDays);
-    renderPanel('qdr');
-  }
-
   // ── Color Vision ───────────────────────────────────────
   const CV_MODES = [
     { id:'standard',     name:'Standard',            sub:'Default colors',               swatches:['#a855f7','#ec4899','#06b6d4','#84cc16'] },
@@ -3920,12 +3670,10 @@
       const v = t.vars;
       const sel = id === currentTheme;
       return `<div class="theme-card${sel ? ' selected' : ''}" onclick="applyTheme('${id}')" style="background:${mb['--surface']};border-color:${mb['--border']}">
-        <div class="theme-accent-bar" style="background:linear-gradient(90deg,${v['--proj-a']},${v['--proj-b']},${v['--qdr-a']},${v['--qdr-b']})"></div>
+        <div class="theme-accent-bar" style="background:linear-gradient(90deg,${v['--proj-a']},${v['--proj-b']})"></div>
         <div class="theme-swatches">
           <span class="theme-swatch" style="background:${v['--proj-a']}"></span>
           <span class="theme-swatch" style="background:${v['--proj-b']}"></span>
-          <span class="theme-swatch" style="background:${v['--qdr-a']}"></span>
-          <span class="theme-swatch" style="background:${v['--qdr-b']}"></span>
         </div>
         <div class="theme-name-row">
           <span class="theme-name" style="color:${mb['--text']}">${t.name}</span>
@@ -3947,15 +3695,11 @@
         <span class="data-stat-lbl">${panelLabel('proj')}</span>
       </div>
       <div class="data-stat">
-        <span class="data-stat-val">${data.qdr.length}</span>
-        <span class="data-stat-lbl">${panelLabel('qdr')}</span>
-      </div>
-      <div class="data-stat">
-        <span class="data-stat-val">${totalTodos('proj') + totalTodos('qdr')}</span>
+        <span class="data-stat-val">${totalTodos('proj')}</span>
         <span class="data-stat-lbl">${t('data_total')}</span>
       </div>
       <div class="data-stat">
-        <span class="data-stat-val">${doneTodos('proj') + doneTodos('qdr')}</span>
+        <span class="data-stat-val">${doneTodos('proj')}</span>
         <span class="data-stat-lbl">${t('data_done')}</span>
       </div>`;
   }
@@ -3979,8 +3723,10 @@
     reader.onload = ev => {
       try {
         const parsed = JSON.parse(ev.target.result);
-        if (!parsed.proj || !parsed.qdr) throw new Error('Invalid format');
+        if (!parsed.proj) throw new Error('Invalid format');
+        if (!parsed.qdr) parsed.qdr = [];
         data = parsed;
+        data.qdr = data.qdr || [];
         save();
         renderAll();
         renderDataStats();
@@ -4000,7 +3746,7 @@
     const filterOpen = items => items
       .filter(item => !item.done)
       .map(item => ({ ...item, todos: (item.todos ?? []).filter(td => !td.done) }));
-    const payload = { proj: filterOpen(data.proj), qdr: filterOpen(data.qdr) };
+    const payload = { proj: filterOpen(data.proj), qdr: [] };
     const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
     const url  = URL.createObjectURL(blob);
     const a    = document.createElement('a');
@@ -4028,7 +3774,7 @@
     reader.onload = ev => {
       try {
         const parsed = JSON.parse(ev.target.result);
-        if (!parsed.proj || !parsed.qdr) throw new Error('Invalid format');
+        if (!parsed.proj) throw new Error('Invalid format');
         const tag = item => ({
           ...item,
           id:    crypto.randomUUID(),
@@ -4036,11 +3782,10 @@
           todos: (item.todos ?? []).map(td => ({ ...td, id: crypto.randomUUID() }))
         });
         data.proj.push(...parsed.proj.map(tag));
-        data.qdr.push(...parsed.qdr.map(tag));
         save();
         renderAll();
         renderDataStats();
-        const count = parsed.proj.length + parsed.qdr.length;
+        const count = parsed.proj.length;
         fb.textContent = count === 1 ? t('col_import_ok_1', colleague) : t('col_import_ok_n', count, colleague);
         fb.className   = 'data-feedback ok';
       } catch {
@@ -4494,16 +4239,16 @@
 
     // Collect closed items
     const allDoneItems = [];
-    ['proj', 'qdr'].forEach(panel => {
+    ['proj'].forEach(panel => {
       (data[panel] || []).filter(i => i.done && i.closedAt).forEach(i => {
         allDoneItems.push({ ...i, _panel: panel });
       });
     });
-    const totalAll = ['proj', 'qdr'].reduce((s, p) => s + (data[p] || []).filter(i => i.done).length, 0);
+    const totalAll = ['proj'].reduce((s, p) => s + (data[p] || []).filter(i => i.done).length, 0);
 
     // Collect completed todos (with doneAt)
     const allDoneTodos = [];
-    ['proj', 'qdr'].forEach(panel => {
+    ['proj'].forEach(panel => {
       (data[panel] || []).forEach(item => {
         (item.todos || []).filter(td => td.done && td.doneAt).forEach(td => {
           allDoneTodos.push({ ...td, _itemName: item.name, _panel: panel, _itemId: item.id });
@@ -4631,7 +4376,7 @@
     const today = new Date().toISOString().split('T')[0];
     const locale = LANG_LOCALE[currentLang] ?? 'en-US';
     const groups = [];
-    ['proj', 'qdr'].forEach(panel => {
+    ['proj'].forEach(panel => {
       (data[panel] || []).filter(i => !i.done).forEach(item => {
         const open = (item.todos || []).filter(td => !td.done);
         if (open.length) groups.push({ item, panel, todos: open });
@@ -4706,7 +4451,6 @@
     loadPanelNames();
     loadTodoDisplay();
     loadColorVision();
-    loadQdrTarget();
     loadCalSettings();
     updateStaticStrings();
     renderAll();
@@ -4715,7 +4459,7 @@
     // If Firebase is fresh (no data yet), push local data up
     if (firebaseReady && dbRef) {
       dbRef.once('value').then(snap => {
-        if (!snap.val() && (data.proj.length || data.qdr.length)) {
+        if (!snap.val() && data.proj.length) {
           dbRef.set(data);
         }
       });
