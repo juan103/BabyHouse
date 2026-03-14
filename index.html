@@ -330,6 +330,14 @@
     .todo-add-btn:hover { filter: brightness(1.15); }
     .panel--proj .todo-add-btn { background: linear-gradient(135deg, var(--proj-a), var(--proj-b)); color: #fff; }
 
+    /* Compact add-todo button */
+    .todo-add-btn-compact {
+      width: 100%; padding: 5px 0; border-radius: 6px; border: 1px dashed var(--border);
+      background: transparent; color: var(--muted); font-size: 1rem; font-weight: 700;
+      cursor: pointer; transition: all .15s; letter-spacing: 1px;
+    }
+    .todo-add-btn-compact:hover { border-color: var(--proj-a); color: var(--proj-a); background: rgba(168,85,247,.06); }
+
     /* Todo link input row (proj only) */
     .todo-add-link-row { display: flex; gap: 5px; margin-top: 4px; }
     .todo-add-link {
@@ -1672,6 +1680,7 @@
   const KEY = 'dashwork_v1';
   const closedTodos      = new Set();
   const editingTodos     = new Set();
+  const addingTodos      = new Set();
   const closedMilestones = new Set();
   let   pinnedHoverTodo  = null;
   const searchQuery  = { proj: '' };
@@ -1802,20 +1811,27 @@
       </div>`;
     }).join('');
 
-    const linkInputRow = `<div class="todo-add-link-row">
-        <input class="todo-add-link" type="url" id="todo-l-${id}" placeholder="${t('todo_link_ph')}">
+    let addRow;
+    if (addingTodos.has(id)) {
+      addRow = `<div class="todo-item todo-item--editing">
+        <div class="todo-edit-r1">
+          <input class="todo-edit-text" id="todo-t-${id}" placeholder="${t('todo_ph')}"
+            onkeydown="if(event.key==='Enter'){event.preventDefault();addTodo('${panel}','${id}');}
+                       if(event.key==='Escape'){cancelAddTodo('${panel}','${id}');}">
+          <div class="todo-edit-actions">
+            <button class="todo-save-btn" onclick="addTodo('${panel}','${id}')">${t('todo_save')}</button>
+            <button class="todo-cancel-btn" onclick="cancelAddTodo('${panel}','${id}')">${t('todo_cancel')}</button>
+          </div>
+        </div>
+        <div class="todo-edit-r2">
+          <input class="todo-edit-date" type="date" id="todo-d-${id}">
+          <button type="button" class="todo-edit-cal" onclick="document.getElementById('todo-d-${id}').showPicker()" title="Pick date">&#128197;</button>
+          <input class="todo-edit-link" type="url" id="todo-l-${id}" placeholder="${t('todo_link_ph')}">
+        </div>
       </div>`;
-
-    const addRow = `<div class="todo-add-row">
-      <input class="todo-add-text" id="todo-t-${id}" placeholder="${t('todo_ph')}"
-        onkeydown="if(event.key==='Enter'){event.preventDefault();addTodo('${panel}','${id}');}">
-      <div class="todo-date-wrap">
-        <input class="todo-add-date" type="date" id="todo-d-${id}">
-        <button type="button" class="todo-add-cal" onclick="document.getElementById('todo-d-${id}').showPicker()" title="Pick date">&#128197;</button>
-      </div>
-      <button class="todo-add-btn" onclick="addTodo('${panel}','${id}')" title="Add">+</button>
-    </div>
-    ${linkInputRow}`;
+    } else {
+      addRow = `<button class="todo-add-btn-compact" onclick="startAddTodo('${panel}','${id}')" title="${t('todo_ph')}">+</button>`;
+    }
 
     const isManual = todoDisplayMode === 'manual-open' || todoDisplayMode === 'manual-closed';
     const headerClick = isManual ? `onclick="toggleTodos('${id}')"` : '';
@@ -2012,6 +2028,17 @@
     toggleHoverPin(id);
   }
 
+  function startAddTodo(panel, itemId) {
+    addingTodos.add(itemId);
+    renderPanel(panel);
+    setTimeout(() => { const el = document.getElementById(`todo-t-${itemId}`); if (el) el.focus(); }, 0);
+  }
+
+  function cancelAddTodo(panel, itemId) {
+    addingTodos.delete(itemId);
+    renderPanel(panel);
+  }
+
   function addTodo(panel, itemId) {
     const textEl = document.getElementById(`todo-t-${itemId}`);
     const dateEl = document.getElementById(`todo-d-${itemId}`);
@@ -2028,6 +2055,7 @@
       link:    linkEl?.value.trim() ?? '',
       done:    false,
     });
+    addingTodos.delete(itemId);
     save(); renderPanel(panel);
   }
 
