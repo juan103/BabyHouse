@@ -29,7 +29,7 @@
     body {
       font-family: 'Segoe UI', system-ui, sans-serif;
       background: var(--bg); color: var(--text);
-      height: 100vh; display: flex; flex-direction: column;
+      height: 100dvh; display: flex; flex-direction: column;
       overflow: hidden; position: relative;
     }
     body::before {
@@ -95,7 +95,7 @@
     .panel--proj .btn-add { background: linear-gradient(135deg, var(--proj-a), var(--proj-b)); box-shadow: 0 4px 14px rgba(168,85,247,.45); }
 
     /* ── Card list ── */
-    .card-list { flex: 1; overflow-y: auto; padding: 2px 18px 18px; display: flex; flex-direction: column; gap: 10px; }
+    .card-list { flex: 1; overflow-y: auto; padding: 2px 18px 18px; padding-bottom: max(18px, env(safe-area-inset-bottom, 18px)); display: flex; flex-direction: column; gap: 10px; -webkit-overflow-scrolling: touch; }
     .card-list::-webkit-scrollbar { width: 4px; }
     .card-list::-webkit-scrollbar-track { background: transparent; }
     .panel--proj .card-list::-webkit-scrollbar-thumb { background: linear-gradient(var(--proj-a), var(--proj-b)); border-radius: 4px; }
@@ -1072,6 +1072,75 @@
     .ot-todo-link:hover { color: var(--proj-a); }
     .ot-goto-btn { background: none; border: 1px solid var(--border); border-radius: 8px; padding: 3px 10px; font-size: .75rem; font-weight: 700; color: var(--muted); cursor: pointer; flex-shrink: 0; transition: all .15s; }
     .ot-goto-btn:hover { border-color: var(--proj-a); color: var(--proj-a); background: rgba(168,85,247,.07); }
+
+    /* ── Shopping view ───────────────────────────────────── */
+    #view-shopping {
+      flex: 1; overflow-y: auto;
+      display: none; flex-direction: column;
+      position: relative; z-index: 1;
+    }
+    #view-shopping.active { display: flex; }
+    .shop-scroll {
+      padding: 28px 36px; padding-bottom: max(28px, env(safe-area-inset-bottom, 28px));
+      max-width: 640px; width: 100%; margin: 0 auto;
+      display: flex; flex-direction: column; gap: 16px;
+      -webkit-overflow-scrolling: touch;
+    }
+    .shop-add-row {
+      display: flex; gap: 8px; position: sticky; top: 0; z-index: 5;
+      background: var(--bg); padding: 4px 0 12px;
+    }
+    .shop-add-input {
+      flex: 1; background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; color: var(--text); font-size: .9rem;
+      padding: 10px 14px; font-family: inherit; outline: none;
+      transition: border-color .15s, box-shadow .15s;
+    }
+    .shop-add-input:focus { border-color: var(--proj-a); box-shadow: 0 0 0 3px rgba(168,85,247,.15); }
+    .shop-add-input::placeholder { color: var(--muted); }
+    .shop-add-btn {
+      padding: 10px 20px; border-radius: 10px; border: none;
+      font-size: .85rem; font-weight: 700; cursor: pointer;
+      background: linear-gradient(135deg, var(--proj-a), var(--proj-b));
+      color: #fff; box-shadow: 0 4px 14px rgba(168,85,247,.4);
+      transition: transform .12s, filter .12s; flex-shrink: 0;
+    }
+    .shop-add-btn:hover { transform: translateY(-1px); filter: brightness(1.15); }
+    .shop-list { display: flex; flex-direction: column; gap: 6px; }
+    .shop-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 14px; border-radius: 10px;
+      background: var(--surface); border: 1px solid var(--border);
+      transition: background .15s, border-color .15s, opacity .2s;
+    }
+    .shop-item:hover { border-color: rgba(168,85,247,.3); }
+    .shop-item.bought { opacity: .45; }
+    .shop-item.bought .shop-item-text { text-decoration: line-through; color: var(--muted); }
+    .shop-cb { width: 18px; height: 18px; cursor: pointer; flex-shrink: 0; accent-color: var(--proj-a); }
+    .shop-item-text { flex: 1; font-size: .88rem; min-width: 0; word-break: break-word; }
+    .shop-item-qty {
+      font-size: .72rem; font-weight: 700; padding: 2px 8px; border-radius: 8px;
+      background: rgba(168,85,247,.12); color: var(--proj-a);
+      border: 1px solid rgba(168,85,247,.25); flex-shrink: 0;
+    }
+    .shop-del {
+      background: none; border: none; cursor: pointer; color: var(--muted);
+      font-size: .8rem; padding: 4px 5px; border-radius: 5px; line-height: 1;
+      flex-shrink: 0; transition: color .13s, background .13s;
+    }
+    .shop-del:hover { color: #f87171; background: rgba(248,113,113,.1); }
+    .shop-empty { text-align: center; padding: 80px 20px; }
+    .shop-empty-icon { font-size: 3.5rem; margin-bottom: 16px; }
+    .shop-empty-title { font-size: 1.3rem; font-weight: 800; color: var(--text); margin-bottom: 8px; }
+    .shop-empty-sub { font-size: .9rem; color: var(--muted); }
+    .shop-clear-btn {
+      align-self: center; font-size: .75rem; font-weight: 700;
+      padding: 6px 18px; border-radius: 20px;
+      border: 1px solid var(--border); background: var(--surface2);
+      color: var(--muted); cursor: pointer; transition: all .15s;
+    }
+    .shop-clear-btn:hover { border-color: var(--proj-a); color: var(--text); background: var(--surface); }
+
     /* Achievements: discrete todo rows */
     .ach-todos-section { margin-top: 8px; border-radius: 10px; border: 1px solid var(--border); overflow: hidden; background: var(--surface2); opacity: .85; }
     .ach-todos-header  { display: flex; align-items: center; gap: 8px; padding: 6px 12px; border-bottom: 1px solid var(--border); }
@@ -1168,6 +1237,7 @@
   <button class="tab-btn" data-view="calendar" onclick="setView('calendar')"><span class="tab-icon">&#128467;</span><span data-i18n="tab_calendar">Calendar</span></button>
   <button class="tab-btn" data-view="achievements" onclick="setView('achievements')"><span class="tab-icon">&#127942;</span><span data-i18n="tab_achievements">Achievements</span></button>
   <button class="tab-btn" data-view="open-todos"   onclick="setView('open-todos')"><span class="tab-icon">&#9989;</span><span data-i18n="tab_open_todos">Pending</span></button>
+  <button class="tab-btn" data-view="shopping" onclick="setView('shopping')"><span class="tab-icon">&#128722;</span><span data-i18n="tab_shopping">Shopping</span></button>
   <button class="tab-btn" data-view="settings" onclick="setView('settings')"><span class="tab-icon tab-icon--gear">&#9881;</span><span data-i18n="tab_settings">Settings</span></button>
 </div>
 
@@ -1433,6 +1503,17 @@
   <div class="ot-scroll">
     <div class="ot-top" id="ot-stats"></div>
     <div class="ot-groups" id="ot-list"></div>
+  </div>
+</div>
+
+<!-- Shopping view -->
+<div id="view-shopping">
+  <div class="shop-scroll">
+    <div class="shop-add-row">
+      <input class="shop-add-input" id="shop-input" type="text" placeholder="Add item…" onkeydown="if(event.key==='Enter')addShopItem()">
+      <button class="shop-add-btn" onclick="addShopItem()">+ Add</button>
+    </div>
+    <div class="shop-list" id="shop-list"></div>
   </div>
 </div>
 
@@ -2241,6 +2322,7 @@
     document.getElementById('view-settings').style.display     = view === 'settings'     ? 'flex' : 'none';
     document.getElementById('view-achievements').style.display = view === 'achievements' ? 'flex' : 'none';
     document.getElementById('view-open-todos').style.display   = view === 'open-todos'   ? 'flex' : 'none';
+    document.getElementById('view-shopping').style.display     = view === 'shopping'     ? 'flex' : 'none';
     document.querySelectorAll('.tab-btn').forEach(b =>
       b.classList.toggle('active', b.dataset.view === view)
     );
@@ -2248,6 +2330,7 @@
     if (view === 'settings')     { renderLangGrid(); renderPanelNamesGrid(); renderTodoDisplayGrid(); renderColors(); renderColorVisionGrid(); loadCalSettings(); renderDataStats(); renderFortune(); }
     if (view === 'achievements') renderAchievements();
     if (view === 'open-todos')   renderOpenTodos();
+    if (view === 'shopping')     renderShopping();
   }
 
   // ── Calendar ──────────────────────────────────────────
@@ -2782,6 +2865,7 @@
       cv_high_contrast_name:'High Contrast', cv_high_contrast_sub:'Maximum luminance contrast',
       tab_achievements:'Achievements', ach_empty_title:'Nothing closed yet', ach_empty_sub:'Close your first item or to-do to start your streak', ach_streak_label:'workday streak', ach_total_label:'items closed', ach_today:'Today', ach_yesterday:'Yesterday', ach_n_done:'{0} closed', ach_todos_done:'to-dos done',
       tab_open_todos:'Pending', ot_empty_title:'All clear!', ot_empty_sub:'No open to-dos right now', ot_overdue:'Overdue', ot_due_today:'Due today',
+      tab_shopping:'Shopping', shop_empty_title:'Nothing to buy', shop_empty_sub:'Add items you need to purchase', shop_clear_bought:'Clear bought items',
     },
     de: {
       tab_board:'Tafel', tab_calendar:'Kalender', tab_settings:'Einstellungen',
@@ -2839,6 +2923,7 @@
       cv_high_contrast_name:'Hoher Kontrast', cv_high_contrast_sub:'Maximaler Helligkeitskontrast',
       tab_achievements:'Erfolge', ach_empty_title:'Noch nichts abgeschlossen', ach_empty_sub:'Schließe deinen ersten Eintrag oder eine Aufgabe, um eine Serie zu starten', ach_streak_label:'Arbeitstag-Serie', ach_total_label:'Einträge abgeschlossen', ach_today:'Heute', ach_yesterday:'Gestern', ach_n_done:'{0} abgeschlossen', ach_todos_done:'Aufgaben erledigt',
       tab_open_todos:'Ausstehend', ot_empty_title:'Alles erledigt!', ot_empty_sub:'Keine offenen Aufgaben', ot_overdue:'Überfällig', ot_due_today:'Heute fällig',
+      tab_shopping:'Einkaufen', shop_empty_title:'Nichts zu kaufen', shop_empty_sub:'Füge Artikel hinzu, die du kaufen musst', shop_clear_bought:'Gekaufte entfernen',
     },
     es: {
       tab_board:'Tablero', tab_calendar:'Calendario', tab_settings:'Ajustes',
@@ -2896,6 +2981,7 @@
       cv_high_contrast_name:'Alto Contraste', cv_high_contrast_sub:'Máximo contraste de luminancia',
       tab_achievements:'Logros', ach_empty_title:'Nada cerrado aún', ach_empty_sub:'Cierra tu primer elemento o tarea para comenzar tu racha', ach_streak_label:'días laborables', ach_total_label:'elementos cerrados', ach_today:'Hoy', ach_yesterday:'Ayer', ach_n_done:'{0} cerrados', ach_todos_done:'tareas hechas',
       tab_open_todos:'Pendientes', ot_empty_title:'¡Todo al día!', ot_empty_sub:'Sin tareas pendientes ahora mismo', ot_overdue:'Atrasado', ot_due_today:'Vence hoy',
+      tab_shopping:'Compras', shop_empty_title:'Nada que comprar', shop_empty_sub:'Agrega artículos que necesites comprar', shop_clear_bought:'Limpiar comprados',
     },
     fr: {
       tab_board:'Tableau', tab_calendar:'Calendrier', tab_settings:'Paramètres',
@@ -2953,6 +3039,7 @@
       cv_high_contrast_name:'Contraste Élevé', cv_high_contrast_sub:'Contraste de luminance maximal',
       tab_achievements:'Succès', ach_empty_title:'Rien de clôturé pour l\'instant', ach_empty_sub:'Clôture ton premier élément ou tâche pour démarrer une série', ach_streak_label:'jours ouvrés', ach_total_label:'éléments clôturés', ach_today:'Aujourd\'hui', ach_yesterday:'Hier', ach_n_done:'{0} clôturés', ach_todos_done:'tâches faites',
       tab_open_todos:'En attente', ot_empty_title:'Tout est fait !', ot_empty_sub:'Aucune tâche en attente pour l\'instant', ot_overdue:'En retard', ot_due_today:'Dû aujourd\'hui',
+      tab_shopping:'Courses', shop_empty_title:'Rien à acheter', shop_empty_sub:'Ajoutez des articles à acheter', shop_clear_bought:'Supprimer les achetés',
     },
     it: {
       tab_board:'Bacheca', tab_calendar:'Calendario', tab_settings:'Impostazioni',
@@ -3010,6 +3097,7 @@
       cv_high_contrast_name:'Alto Contrasto', cv_high_contrast_sub:'Massimo contrasto di luminanza',
       tab_achievements:'Traguardi', ach_empty_title:'Ancora nulla chiuso', ach_empty_sub:'Chiudi il tuo primo elemento o attività per iniziare la serie', ach_streak_label:'giorni lavorativi', ach_total_label:'elementi chiusi', ach_today:'Oggi', ach_yesterday:'Ieri', ach_n_done:'{0} chiusi', ach_todos_done:'attività fatte',
       tab_open_todos:'In sospeso', ot_empty_title:'Tutto fatto!', ot_empty_sub:'Nessun to-do aperto al momento', ot_overdue:'Scaduto', ot_due_today:'Scade oggi',
+      tab_shopping:'Spesa', shop_empty_title:'Niente da comprare', shop_empty_sub:'Aggiungi articoli da acquistare', shop_clear_bought:'Rimuovi acquistati',
     },
     zh: {
       tab_board:'看板', tab_calendar:'日历', tab_settings:'设置',
@@ -3067,6 +3155,7 @@
       cv_high_contrast_name:'高对比度', cv_high_contrast_sub:'最大亮度对比',
       tab_achievements:'成就', ach_empty_title:'还没有关闭任何项目', ach_empty_sub:'关闭第一个项目或任务以开始你的连胜', ach_streak_label:'工作日连胜', ach_total_label:'已关闭项目', ach_today:'今天', ach_yesterday:'昨天', ach_n_done:'{0}个已关闭', ach_todos_done:'任务已完成',
       tab_open_todos:'待处理', ot_empty_title:'全部完成！', ot_empty_sub:'目前没有未完成的待办事项', ot_overdue:'已逾期', ot_due_today:'今天到期',
+      tab_shopping:'购物', shop_empty_title:'没有要买的', shop_empty_sub:'添加需要购买的物品', shop_clear_bought:'清除已购买',
     },
     ja: {
       tab_board:'ボード', tab_calendar:'カレンダー', tab_settings:'設定',
@@ -3124,6 +3213,7 @@
       cv_high_contrast_name:'ハイコントラスト', cv_high_contrast_sub:'最大輝度コントラスト',
       tab_achievements:'実績', ach_empty_title:'まだ何も完了していません', ach_empty_sub:'最初のアイテムまたはタスクを完了してストリークを始めよう', ach_streak_label:'稼働日連続', ach_total_label:'完了したアイテム', ach_today:'今日', ach_yesterday:'昨日', ach_n_done:'{0}件完了', ach_todos_done:'タスク完了',
       tab_open_todos:'未完了', ot_empty_title:'すべて完了！', ot_empty_sub:'未完了のタスクはありません', ot_overdue:'期限超過', ot_due_today:'今日が期限',
+      tab_shopping:'買い物', shop_empty_title:'買うものなし', shop_empty_sub:'購入する商品を追加してください', shop_clear_bought:'購入済みを消去',
     },
     ko: {
       tab_board:'보드', tab_calendar:'캘린더', tab_settings:'설정',
@@ -3181,6 +3271,7 @@
       cv_high_contrast_name:'고대비', cv_high_contrast_sub:'최대 휘도 대비',
       tab_achievements:'성과', ach_empty_title:'아직 완료된 항목 없음', ach_empty_sub:'첫 번째 항목 또는 할 일을 완료하여 연속 기록을 시작하세요', ach_streak_label:'연속 업무일', ach_total_label:'완료된 항목', ach_today:'오늘', ach_yesterday:'어제', ach_n_done:'{0}개 완료', ach_todos_done:'할 일 완료',
       tab_open_todos:'미완료', ot_empty_title:'모두 완료!', ot_empty_sub:'현재 열린 할 일이 없습니다', ot_overdue:'기한 초과', ot_due_today:'오늘 마감',
+      tab_shopping:'쇼핑', shop_empty_title:'살 것 없음', shop_empty_sub:'구매할 항목을 추가하세요', shop_clear_bought:'구매한 항목 지우기',
     },
     pt: {
       tab_board:'Quadro', tab_calendar:'Calendário', tab_settings:'Configurações',
@@ -3238,6 +3329,7 @@
       cv_high_contrast_name:'Alto Contraste', cv_high_contrast_sub:'Contraste de luminância máximo',
       tab_achievements:'Conquistas', ach_empty_title:'Nada fechado ainda', ach_empty_sub:'Feche seu primeiro item ou tarefa para começar sua sequência', ach_streak_label:'dias úteis seguidos', ach_total_label:'itens fechados', ach_today:'Hoje', ach_yesterday:'Ontem', ach_n_done:'{0} fechados', ach_todos_done:'tarefas feitas',
       tab_open_todos:'Pendentes', ot_empty_title:'Tudo em dia!', ot_empty_sub:'Nenhum to-do aberto no momento', ot_overdue:'Atrasado', ot_due_today:'Vence hoje',
+      tab_shopping:'Compras', shop_empty_title:'Nada para comprar', shop_empty_sub:'Adicione itens que precisa comprar', shop_clear_bought:'Limpar comprados',
     },
     hu: {
       tab_board:'Tábla', tab_calendar:'Naptár', tab_settings:'Beállítások',
@@ -3295,6 +3387,7 @@
       cv_high_contrast_name:'Magas kontraszt', cv_high_contrast_sub:'Maximális fényességkontraszt',
       tab_achievements:'Eredmények', ach_empty_title:'Még semmi sem lezárva', ach_empty_sub:'Zárd le az első elemet vagy feladatot a sorozat indításához', ach_streak_label:'munkanap-sorozat', ach_total_label:'lezárt elemek', ach_today:'Ma', ach_yesterday:'Tegnap', ach_n_done:'{0} lezárva', ach_todos_done:'feladat elvégezve',
       tab_open_todos:'Függőben', ot_empty_title:'Minden kész!', ot_empty_sub:'Nincs nyitott teendő jelenleg', ot_overdue:'Késedelmes', ot_due_today:'Ma esedékes',
+      tab_shopping:'Bevásárlás', shop_empty_title:'Nincs mit venni', shop_empty_sub:'Add hozzá a megvásárolni kívánt tételeket', shop_clear_bought:'Megvettek törlése',
     },
     da: {
       tab_board:'Tavle', tab_calendar:'Kalender', tab_settings:'Indstillinger',
@@ -3352,6 +3445,7 @@
       cv_high_contrast_name:'Høj kontrast', cv_high_contrast_sub:'Maksimal luminanskontrast',
       tab_achievements:'Resultater', ach_empty_title:'Intet lukket endnu', ach_empty_sub:'Luk dit første element eller opgave for at starte din serie', ach_streak_label:'arbejdsdages serie', ach_total_label:'elementer lukket', ach_today:'I dag', ach_yesterday:'I går', ach_n_done:'{0} lukket', ach_todos_done:'opgaver klaret',
       tab_open_todos:'Afventer', ot_empty_title:'Alt klaret!', ot_empty_sub:'Ingen åbne opgaver lige nu', ot_overdue:'Forsinket', ot_due_today:'Forfalder i dag',
+      tab_shopping:'Indkøb', shop_empty_title:'Intet at købe', shop_empty_sub:'Tilføj varer du skal købe', shop_clear_bought:'Ryd købte varer',
     },
   };
 
@@ -4432,6 +4526,77 @@
       </div>`).join('');
   }
 
+  // ── Shopping list ──────────────────────────────────────
+  const SHOP_KEY = 'babyhouse_shopping';
+  let shopItems = [];
+
+  function loadShopping() {
+    try { const r = localStorage.getItem(SHOP_KEY); if (r) shopItems = JSON.parse(r); } catch {}
+    if (firebaseReady && dbRef) {
+      dbRef.child('shopping').on('value', snap => {
+        const remote = snap.val();
+        if (remote) { shopItems = remote; localStorage.setItem(SHOP_KEY, JSON.stringify(shopItems)); if (currentView === 'shopping') renderShopping(); }
+      });
+    }
+  }
+
+  function saveShopping() {
+    localStorage.setItem(SHOP_KEY, JSON.stringify(shopItems));
+    if (firebaseReady && dbRef) dbRef.child('shopping').set(shopItems);
+  }
+
+  function addShopItem() {
+    const input = document.getElementById('shop-input');
+    const text = input.value.trim();
+    if (!text) { input.focus(); return; }
+    shopItems.push({ id: crypto.randomUUID(), text, bought: false });
+    input.value = '';
+    saveShopping(); renderShopping();
+    input.focus();
+  }
+
+  function toggleShopItem(id) {
+    const item = shopItems.find(x => x.id === id);
+    if (item) { item.bought = !item.bought; saveShopping(); renderShopping(); }
+  }
+
+  function deleteShopItem(id) {
+    shopItems = shopItems.filter(x => x.id !== id);
+    saveShopping(); renderShopping();
+  }
+
+  function clearBoughtItems() {
+    shopItems = shopItems.filter(x => !x.bought);
+    saveShopping(); renderShopping();
+  }
+
+  function renderShopping() {
+    const list = document.getElementById('shop-list');
+    if (!list) return;
+
+    const pending = shopItems.filter(x => !x.bought);
+    const bought  = shopItems.filter(x => x.bought);
+    const sorted  = [...pending, ...bought];
+
+    if (!sorted.length) {
+      list.innerHTML = `
+        <div class="shop-empty">
+          <div class="shop-empty-icon">&#128722;</div>
+          <div class="shop-empty-title">${t('shop_empty_title')}</div>
+          <div class="shop-empty-sub">${t('shop_empty_sub')}</div>
+        </div>`;
+      return;
+    }
+
+    list.innerHTML = sorted.map(item => `
+      <div class="shop-item${item.bought ? ' bought' : ''}">
+        <input class="shop-cb" type="checkbox" ${item.bought ? 'checked' : ''} onchange="toggleShopItem('${item.id}')">
+        <span class="shop-item-text">${esc(item.text)}</span>
+        <button class="shop-del" onclick="deleteShopItem('${item.id}')" title="Remove">&#10005;</button>
+      </div>`).join('')
+      + (bought.length ? `<button class="shop-clear-btn" onclick="clearBoughtItems()">${t('shop_clear_bought')}</button>` : '');
+  }
+
   let _appStarted = false;
   function startApp() {
     if (_appStarted) return;
@@ -4445,6 +4610,7 @@
     loadTodoDisplay();
     loadColorVision();
     loadCalSettings();
+    loadShopping();
     updateStaticStrings();
     renderAll();
     _updateSyncIndicator(firebaseReady ? 'synced' : 'offline');
